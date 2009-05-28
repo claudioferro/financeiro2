@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:custom="http://faces.componete/jsf"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j" >
+    <body>
+
+        <ui:composition template="./Template.xhtml">
+
+
+            <ui:param name="title" value="Consulta Movimentação Financeira"/>
+            <ui:define name="content">
+                <h:form>
+                    <table>
+                        <tr>
+                            <td>
+                                <fieldset class="campos">
+                                    <legend class="news">Selecione:</legend>
+
+                                    <h:selectOneRadio id="tipoConsulta" layout="pageDirection" value="#{MovimentacaoFinanceiraBo.tipoConsulta}">
+                                        <f:selectItem itemLabel="Código" itemValue="cod" />
+                                        <f:selectItem itemLabel="Valor" itemValue="valor" />
+                                        <f:selectItem itemLabel="Clie/Forn"  itemValue="clie" />
+                                    </h:selectOneRadio>
+
+                                </fieldset>
+                            </td>
+                            <td>
+                                <fieldset class="campos">
+                                    <legend class="news">Dados da pesquisa:::</legend>
+                                    <table width="99%" align="center" border="0">
+                                        <tr>
+                                            <td class="label">Conteúdo:</td>
+                                            <td><h:inputText  value="#{MovimentacaoFinanceiraBo.valConsulta}" styleClass="textFieldEscritas" id="Descricao" maxlength="50">
+                                                <f:convertNumber   />
+                                                </h:inputText>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                            <td>
+                                            </td>
+                                            <td><h:messages/>
+                                                <h:commandButton accesskey="P" styleClass="button" value="Pesquisar" action="#{MovimentacaoFinanceiraBo.consult_Mov}" />&#160;&#160;
+                                                <h:commandButton accesskey="L" styleClass="button" value="Limpar" action="#{MovimentacaoFinanceiraBo.limparCons}"/>&#160;&#160;
+                                                <h:commandButton accesskey="V" styleClass="button" value="Voltar" action="#{MovimentacaoFinanceiraBo.addMovFinanceira}"/>&#160;&#160;
+                                            </td>
+                                            <br/>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                            </td>
+                        </tr>
+                    </table>
+                    <rich:dataTable value="#{MovimentacaoFinanceiraBo.movFinanceirasTo}" var="item" width="700px" rowClasses="classeOne,classTwo" columnClasses="center"
+                                    rows="10" reRender="ds">
+                        <f:facet name="header">
+                            <h:outputText value="Lista Movimentação Financeira"/>
+                        </f:facet>
+                        <rich:column sortBy="#{item.codMovimentacaoFinanceira}">
+                            <f:facet name="header">
+                                <h:outputText value="Código"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codMovimentacaoFinanceira}"/>
+                        </rich:column>
+                        <rich:column sortBy="#{item.clienteFornecedor}">
+                            <f:facet name="header">
+                                <h:outputText value="Cliente/Fornecedor"/>
+                            </f:facet>
+                            <h:outputText value="#{item.clienteFornecedor}"/>
+                        </rich:column>
+                        <rich:column sortBy="#{item.dataLancamento}">
+                            <f:facet name="header">
+                                <h:outputText value="Data"/>
+                            </f:facet>
+                            <h:outputText value="#{item.dataLancamento}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                            </h:outputText>
+                        </rich:column>
+                        <rich:column sortBy="#{item.valorLancamento}">
+                            <f:facet name="header">
+                                <h:outputText value="Valor"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valorLancamento}"/>
+                        </rich:column>
+                        <rich:column sortBy="#{item.operacao}">
+                            <f:facet name="header">
+                                <h:outputText value="Operação"/>
+                            </f:facet>
+                            <h:outputText value="#{item.operacao}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ações"/>
+                            </f:facet>
+                            <h:commandButton value= "Alterar" accesskey="A" styleClass="button" action="#{MovimentacaoFinanceiraBo.iniciaEditMovFinanceia}" >
+                                <f:setPropertyActionListener target="#{MovimentacaoFinanceiraBo.selectMovFinanceira}" value="#{item}"/>
+                            </h:commandButton>
+
+                        </rich:column>
+                        <f:facet name="footer">
+                            <rich:datascroller id="ds"></rich:datascroller>
+                        </f:facet>
+                    </rich:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

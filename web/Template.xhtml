@@ -1,0 +1,138 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link href="./css/default.css" rel="stylesheet" type="text/css" />
+        <link href="./css/tableLayout.css" rel="stylesheet" type="text/css" />
+        <script type='text/javascript' src="./js/funcoes.js"></script>
+        <title>${title}</title>
+    </head>
+    <body>
+        <table cellspacing="0px" align="center" >
+            <tr>
+                <td id="top" colspan="2">
+                    <ui:include src="top.xhtml" name="top">Top</ui:include>
+                </td>
+            </tr>
+            <tr>
+                <td id="left">
+                    <ui:insert name="left">
+                        <h:form>
+                            <h:panelGrid columns="2" columnClasses="cols" width="100%">
+                                <rich:panelMenu style="width:140px"  mode="server"
+                                                iconExpandedGroup="disc" iconCollapsedGroup="disc"
+                                                iconExpandedTopGroup="triangleUp" iconGroupTopPosition="right"
+                                                iconCollapsedTopGroup="triangleDown" iconCollapsedTopPosition="right" >
+                                    <rich:panelMenuGroup label="Cadastros">
+
+                                        <rich:panelMenuItem label="Cidades"  action="#{CidadeBo.addCid}">
+                                            <f:param name="cidade" value="Cidades"/>
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Empresa"  action="#{EmpresaBo.addFilial}">
+                                            <f:param name="empresa" value="Empresa"/>
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Tipo Clientes"  action="#{TipoClienteBo.addtipo}">
+                                            <f:param name="tipocliente" value="Tipo Clientes"/>
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Clientes"  action="#{ClienteBo.addCl}">
+                                            <f:param name="cliente" value="Clientes"/>
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Fornecedores"  action="#{FornecedorBo.addFornecedor}">
+                                            <f:param name="Fornecedores" value="Fornecedores"/>
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Bancos"  action="#{BancosBo.addBanco}">
+                                            <f:param name="bancos" value="Bancos"/>
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Centro de Custo"  action="#{CentroCustoBo.addCentroCusto}">
+                                            <f:param name="centrocusto" value="Centro de Custo"/>
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Forma de Pagamento"  action="#{FormaPagamentoBo.addFormaPagto}">
+                                            <f:param name="formapag" value="Forma de Pagamento"/>
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Conta Corrente"  action="#{ContaCorrenteBo.addContaCorrente}">
+                                            <f:param name="contacorrente" value="Conta Corrente"/>
+                                        </rich:panelMenuItem>
+                                        
+
+                                        <rich:panelMenuItem label="Tipo Documento" action="#{TipoDocumentoBo.addTipoDocumento}">
+                                            <f:param name="tipodocumento" value="Tipo Documento"/>
+                                        </rich:panelMenuItem>
+                                         <rich:panelMenuItem label="Usuário" action="#{UsuarioBo.addUsuario}">
+                                            <f:param name="usuario" value="Usuário"/>
+                                        </rich:panelMenuItem>
+
+                                    </rich:panelMenuGroup>
+                                    <rich:panelMenuGroup label="Movimentação">
+                                        <rich:panelMenuItem label="Movimentação Fiananceira" action="#{MovimentacaoFinanceiraBo.addMovFinanceira}"  >
+                                            <f:param name="movfinanceira" value="Movimentação Financeira"/>
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Contas a Pagar/Receber" action="#{ContasPagarReceberBo.addContas}">
+                                            <f:param name="movpagar_receber" value="Contas a Pagar/Receber"/>
+                                        </rich:panelMenuItem>
+
+
+                                    </rich:panelMenuGroup>
+
+
+                                    <rich:panelMenuGroup label="Consultas">
+                                        <rich:panelMenuItem label="Clientes" action="cons_cliente">
+                                            <f:param name="conscliente" value="Clientes"/>
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Fornecedores" action="cons_fornecedor">
+                                            <f:param name="consfornecedores" value="Fornecedores" />
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Contas a Pagar/Receber">
+                                            <f:param name="conspagar_receber" value="Contas a Pagar/Receber"/>
+                                        </rich:panelMenuItem>
+                                      </rich:panelMenuGroup>
+
+                                    <rich:panelMenuGroup label="Relatórios">
+                                        <rich:panelMenuItem label="Lista de Cidades"  action="gotoCidadeList">
+                                            <f:param name="listCidade" value="Lista de Cidades"/>
+                                        </rich:panelMenuItem>
+                                        <rich:panelMenuItem label="Contas Pagar Receber"  action="gotoRelContasPagarReceber">
+                                            <f:param name="listContasPagarReceber" value="Lista de ContasPagarReceber"/>
+                                        </rich:panelMenuItem>
+                                         <rich:panelMenuItem label="Movimentação Periodo"  action="gotoRelMovimentacaoPeriodo">
+                                            <f:param name="listMovimentacaoPeriodo" value="Lista de MovimentacaoPeriodo"/>
+                                        </rich:panelMenuItem>
+
+                                        <rich:panelMenuItem label="Contas Receber Pagar Documentos Liquidados"  action="gotoRelContasReceberPagarDocumentosLiquidadosDataPagamento">
+                                            <f:param name="listContasReceberPagarDocumentosLiquidadosDataPagamento" value="Lista de ContasReceberPagarDocumentosLiquidadosDataPagamento"/>
+                                        </rich:panelMenuItem>
+
+                                    </rich:panelMenuGroup>
+                                    <rich:panelMenuGroup label="Sobre">
+                                        <rich:panelMenuItem label="Sistema" >
+
+                                        </rich:panelMenuItem>
+                                    </rich:panelMenuGroup>
+                                </rich:panelMenu>
+
+
+                            </h:panelGrid>
+
+                        </h:form>
+                    </ui:insert>
+                </td>
+                <td id="content" height="300">
+                    <ui:insert name="content">Conteúdo da pagína</ui:insert>
+                </td>
+            </tr>
+            <tr>
+                <td id="bottom" colspan="2">
+                    <ui:include src="bottom.xhtml" name="bottom">botton</ui:include>
+                </td>
+            </tr>
+        </table>
+    </body>
+
+</html>
