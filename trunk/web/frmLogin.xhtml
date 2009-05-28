@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:custom="http://faces.componete/jsf"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <body>
+        <ui:composition template="./Template.xhtml">
+
+            <ui:param name="title" value="Sistema Financeiro Web Login"/>
+            <ui:define name="left"></ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <center>
+                        <br/>
+                        <br/>
+                        <h:outputText styleClass="labelAlerta" value="#{UsuarioBo.mensagem}" />
+                        <h:panelGrid columns="2" columnClasses="gridContent" >
+                            <rich:panel bodyClass="inpanelBody"  styleClass="panelGrid" >
+                                <f:facet name="header">
+                                    Dados do usuário
+                                </f:facet>
+                                <table border="0" align="center">
+                                    <tr><br/>
+                                        <td>Usuário:</td>
+                                        <td><h:inputText  id="usuário" value="#{UsuarioBo.user}" size="30" maxlength="50"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Senha:</td>
+                                        <td><h:inputSecret id="senha" value="#{UsuarioBo.senha}" size="30" maxlength="12" /></td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2"><br/>
+                                            <h:commandButton action="#{UsuarioBo.doLogin}" accesskey="E" styleClass="button" value="Entrar"  />&#160;
+                                            <h:commandButton action="#{UsuarioBo.limparLogin}" accesskey="L" styleClass="button" value="Limpar"  />&#160;
+                                        </td>
+                                    </tr>
+
+
+                                </table>
+
+                            </rich:panel>
+                        </h:panelGrid>
+                        <h:panelGrid columns="2" columnClasses="gridContent" >
+                            <rich:panel bodyClass="inpanelBody" styleClass="panelGridp" >
+                                <f:facet name="header">
+                                    Selecione a Empresa:
+                                </f:facet>
+                                <table border="0" align="center">
+
+                                    <tr>
+                                       
+                                        <td>
+                                            <br/>
+                                            <h:selectOneMenu defaultLabel="Selecione" converterMessage="Empresa invalido" class="comboBoxGrande"  name="Empresa" id="empresa" value="#{UsuarioBo.codEmpresa}" >
+                                                <f:converter converterId="FilialConverter"/>
+                                                <f:selectItems value="#{UsuarioBo.filiaisSystem}" />
+                                            </h:selectOneMenu>
+
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </rich:panel>
+                        </h:panelGrid>
+                    </center>
+                </h:form>
+
+
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
+

@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:custom="http://faces.componete/jsf"
+       xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <link href="./css/default.css" rel="stylesheet" type="text/css" />
+    <body>
+        <ui:composition template="./Template.xhtml">
+            <ui:param name="title" value="Sistema Financeiro Web"/>
+            <ui:define name="content">
+                <h:form>
+                    <p>
+                        <fieldset class="camposCompleto"><legend >DADOS DO TIPO CLIENTE</legend>
+                            <table  align="center" border="0" cellspacing="5">
+                                <tr>
+                                    <td  class="label"><label>Código do tipo cliente:</label></td>
+                                    <td >
+                                        <h:inputText readonly="true"  id="codTipoCliente" value="#{TipoClienteBo.selectTipocliente.codTipoCliente}" styleClass="textFieldPequeno" maxlength="20">
+                                    </h:inputText>  </td>
+                                </tr>
+                                <tr>
+                                    <td class="label"><label>Tipo:</label></td>
+                                    <td> <h:inputText  id="tipo" value="#{TipoClienteBo.selectTipocliente.descricaoReduzida}" styleClass="textFieldPequeno" maxlength="2">
+                                        </h:inputText>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Descrição:</td>
+
+                                    <td><h:inputText  value="#{TipoClienteBo.selectTipocliente.descricao}" styleClass="textFieldEscritas" id="Descricao" maxlength="50"/>  </td>
+                                </tr>
+                            </table>
+                    </fieldset>  </p>
+                    <h:outputText styleClass="labelAlerta" value="#{TipoClienteBo.mensagem}" />
+                    <custom:botoesCadastro
+                        formulario="#{TipoClienteBo}"
+                        formulario2="#{TipoClienteBo.selectTipocliente}"
+                        labelBotaolimpar="Limpar"
+                        labelBotaoconsultar="Consultar"
+                        labelBotaoexcluir="Excluir"
+                        labelBotaosalvar="Salvar"
+                        labelBotaofechar="Fechar"/>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:custom="http://faces.componete/jsf"
+       xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+    <link href="./css/default.css" rel="stylesheet" type="text/css" />
+    
+    <body>
+        
+        <ui:composition template="./Template.xhtml">
+            
+            <ui:param name="title" value="Consulta de Contas Pagar/Receber"/>
+            <ui:define name="content">
+                <h:form>
+                    <table>
+                        <tr>
+                            <td>
+                                <fieldset class="campos">
+                                    <legend class="news">Selecione:</legend>
+                                    <h:selectOneRadio id="tipoConsulta" layout="pageDirection" value="#{ContasPagarReceberBo.tipoConsulta}" onchange="">
+                                        <f:selectItem itemLabel="Código" itemValue="cod" />
+                                        <f:selectItem itemLabel="N° Doc." itemValue="numDoc" />
+                                        <f:selectItem itemLabel="Valor" itemValue="valor" />
+                                        <f:selectItem itemLabel="Clie/Forn" itemValue="clie" />
+                                        <f:selectItem itemLabel="Data Venc." itemValue="data" />                                        
+                                    </h:selectOneRadio>
+                                </fieldset>
+                            </td>
+                            <td>
+                                <fieldset class="campos">
+                                    <legend class="news">Consultar Contas Pagar/Receber:</legend>
+                                    <table width="99%" align="center" border="0">
+                                        <tr>
+                                            <td class="label">Conteúdo:</td>
+                                            <td><h:inputText rendered="#{ContasPagarReceberBo.rederConsulta}"  value="#{ContasPagarReceberBo.valConsulta}" styleClass="textFieldEscritas" id="Descricao" maxlength="50">
+                                                <f:convertNumber   />
+                                                </h:inputText>
+
+                                                <h:inputText rendered="#{ContasPagarReceberBo.rederConsultaData}" value="#{ContasPagarReceberBo.valConsulta}" styleClass="textFieldEscritas" id="DataVencimento" maxlength="10">
+                                                <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                                                </h:inputText>
+                                            </td>
+                                        </tr>
+                                        <tr>
+
+                                            <td>
+                                            </td>
+                                            <td><h:messages/>
+                                            <h:commandButton accesskey="P" styleClass="button" value="Pesquisar" action="#{ContasPagarReceberBo.consult_ContasPagarReceber}" />&#160;&#160;
+                                                <h:commandButton accesskey="L" styleClass="button" value="Limpar" action="#{ContasPagarReceberBo.limparCons}"/>&#160;&#160;
+                                                <h:commandButton accesskey="V" styleClass="button" value="Voltar" action="#{ContasPagarReceberBo.addContas}"/>&#160;&#160;
+                                            </td>
+                                            <br/>
+                                        </tr>
+                                    </table>
+                                </fieldset>
+                            </td>
+                        </tr>
+                    </table>
+                    <rich:dataTable value="#{ContasPagarReceberBo.contasPagarReceberTo}" var="item" width="700px" rowClasses="classeOne,classTwo" columnClasses="center"
+                                    rows="10" reRender="ds">
+                        <f:facet name="header">
+                            <h:outputText value="Lista Contas Pagar/Receber"/>
+                        </f:facet>
+                        <rich:column sortBy="#{item.codContas}">
+                            <f:facet name="header">
+                                <h:outputText value="Código"/>
+                            </f:facet>
+                            <h:outputText value="#{item.codContas}"/>
+                        </rich:column>
+                        <rich:column sortBy="#{item.clienteFornec}">
+                            <f:facet name="header">
+                                <h:outputText value="Cliente/Fornecedor"/>
+                            </f:facet>
+                            <h:outputText value="#{item.clienteFornec}"/>
+                        </rich:column>
+                        <rich:column sortBy="#{item.dataVencimento}">
+                            <f:facet name="header">
+                                <h:outputText value="Data Venc."/>
+                            </f:facet>
+                            <h:outputText value="#{item.dataVencimento}">
+                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                            </h:outputText>
+                        </rich:column>
+                        <rich:column sortBy="#{item.valor}">
+                            <f:facet name="header">
+                                <h:outputText value="Valor"/>
+                            </f:facet>
+                            <h:outputText value="#{item.valor}"/>
+                        </rich:column>
+                        <rich:column>
+                            <f:facet name="header">
+                                <h:outputText value="Ações"/>
+                            </f:facet>
+                            <h:commandButton value= "Alterar" accesskey="A" styleClass="button" action="#{ContasPagarReceberBo.iniciaEditContas}" >
+                                <f:setPropertyActionListener target="#{ContasPagarReceberBo.selectContasPagarReceber}" value="#{item}"/>
+                            </h:commandButton>
+
+                        </rich:column>
+                        <f:facet name="footer">
+                            <rich:datascroller id="ds"></rich:datascroller>
+                        </f:facet>
+                    </rich:dataTable>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+        
+    </body>
+</html>

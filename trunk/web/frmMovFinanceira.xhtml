@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:custom="http://faces.componete/jsf"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j" >
+    <body>
+        <ui:composition template="./Template.xhtml">
+            <ui:param name="title" value="Sistema Financeiro Web"/>
+            <ui:define name="content">
+                <h:form>
+                    <p>
+                        <fieldset class="camposCompleto"><legend >Dados da Movimentação Financeira</legend>
+                            <table  align="center" border="0" cellspacing="5">
+                                <tr>
+                                    <td class="label">Operação</td>
+                                    <td><h:inputHidden id="codEmpresa" value="#{MovimentacaoFinanceiraBo.selectMovFinanceira.empresa}" >
+                                            <f:converter converterId="FilialConverter"/>
+                                        </h:inputHidden>
+                                        <h:selectOneRadio class="label" id="operacao" value="#{MovimentacaoFinanceiraBo.selectMovFinanceira.operacao}">
+                                            <f:selectItem id="credito" itemLabel="Credito" itemValue="C" />
+                                            <f:selectItem id="debito" itemLabel="Debito" itemValue="D" />
+                                        </h:selectOneRadio>
+                                    </td>
+                                    <td class="label">Banco</td>
+                                    <td>
+                                        <h:selectOneMenu defaultLabel="Selecione" converterMessage="Banco Invalida" name="banco" id="banco" class="comboBoxGrande" value="#{MovimentacaoFinanceiraBo.selectMovFinanceira.banco}" >
+                                            <f:converter converterId="BancoConverter"/>
+                                            <f:selectItems value="#{MovimentacaoFinanceiraBo.bancosSystem}" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Histórico</td>
+                                    <td><h:inputText  value="#{MovimentacaoFinanceiraBo.selectMovFinanceira.historico}" styleClass="textFieldEscritas" id="historico" maxlength="50"/> </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Data Lançamento</td>
+                                    <td><h:inputText value="#{MovimentacaoFinanceiraBo.selectMovFinanceira.dataLancamento}" styleClass="textFieldPequeno"  id="dataLancamento" onkeypress="return formataCampo(this,3,10)">
+                                    <f:convertDateTime pattern="dd/MM/yyyy" locale="pt,BR" timeZone="America/Sao_Paulo" /></h:inputText></td>
+                                    <td class="label">Valor</td>
+                                    <td><h:inputText value="#{MovimentacaoFinanceiraBo.selectMovFinanceira.valorLancamento}" styleClass="textFieldPequeno" id="valor" >
+                                            <f:convertNumber   />
+                                        </h:inputText>
+
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label">Conta Corrente</td>
+                                    <td>
+                                        <h:selectOneMenu defaultLabel="Selecione" converterMessage="Conta Corrente Invalida" name="contaCorrente" id="contaCorrente" class="comboBoxGrande" value="#{MovimentacaoFinanceiraBo.selectMovFinanceira.contaCorrente}" >
+                                            <f:converter converterId="ContaCorrenteConverter"/>
+                                            <f:selectItems value="#{MovimentacaoFinanceiraBo.contaCorrenteSystem}" />
+                                        </h:selectOneMenu>
+                                    </td>
+                                    <td class="label">Centro de Custo</td>
+                                    <td>
+                                        <h:selectOneMenu defaultLabel="Selecione" converterMessage="Centro de Custo invalido" name="CentroCusto" id="CentroCusto" class="comboBoxGrande" value="#{MovimentacaoFinanceiraBo.selectMovFinanceira.centroCusto}" >
+                                            <f:converter converterId="CentroCustoConverter"/>
+                                            <f:selectItems value="#{MovimentacaoFinanceiraBo.centroCustoSystem}" />
+                                        </h:selectOneMenu>
+
+                                    </td>
+                                </tr>
+
+                            </table>
+                            <h:messages/>
+                        </fieldset>
+
+                        <fieldset class="camposCompleto"><legend >CLIENTE/FORNECEDOR</legend>
+                            <table align="center" border="0" cellspacing="5">
+                                <tr>
+                                    <td class="label" >Código:</td>
+                                    <td>
+                                        <h:inputText readonly="true" value="#{MovimentacaoFinanceiraBo.selectMovFinanceira.clienteFornecedor}"  styleClass="textFieldPequeno"  id="clienteFornec" maxlength="6">
+                                            <f:converter converterId="ClienteFornecConverter"/>
+                                        </h:inputText>
+                                    </td>
+                                    <td  class="label"><label>Tipo:</label></td>
+                                    <td>
+                                        <h:selectOneRadio class="label" id="tipo" value="#{MovimentacaoFinanceiraBo.tipo}">
+                                            <f:selectItem id="cliente" itemLabel="Cliente" itemValue="C" />
+                                            <f:selectItem id="fornecedor" itemLabel="Fornecedor" itemValue="F" />
+                                        </h:selectOneRadio>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="label" >Cliente/Fornecedor:</td>
+                                    <td>
+                                        <h:inputText readonly="true" value="#{MovimentacaoFinanceiraBo.selectMovFinanceira.clienteFornecedor.nome}"  styleClass="textFieldEscritas" id="nome" maxlength="50">
+                                        </h:inputText>
+                                        <h:commandButton value= "..." accesskey="F" action="#{MovimentacaoFinanceiraBo.consultarClienteFornecedor}" />
+
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </fieldset>
+
+                    </p>
+                    <h:outputText styleClass="labelAlerta" value="#{MovimentacaoFinanceiraBo.mensagem}" />
+                    <custom:botoesCadastro
+                        formulario="#{MovimentacaoFinanceiraBo}"
+                        formulario2="#{MovimentacaoFinanceiraBo.selectMovFinanceira}"
+                        labelBotaolimpar="Limpar"
+                        labelBotaoconsultar="Consultar"
+                        labelBotaoexcluir="Excluir"
+                        labelBotaosalvar="Salvar"
+                        labelBotaofechar="Fechar"/>
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

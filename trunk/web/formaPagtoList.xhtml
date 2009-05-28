@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core">
+      <link href="./css/default.css" rel="stylesheet" type="text/css" />
+    <body>
+        
+        <ui:composition template="./Template.xhtml">
+            <ui:param name="title" value="Lista de Forma de Pagamento"/>
+            <ui:define name="content">
+                <h:form>
+                    <center>
+                        <br/>
+                        <font face="Arial"  size="4" class="titulosForm">  Lista de Forma de Pagamnento</font> </center>
+                        <br/>
+                        <br/>
+                        <font face="Arial" >
+                            <br/>
+                            <h:dataTable  rowClasses="classeOne,classTwo"  var="item" value="#{FormaPagamentoBo.formaPagtoTos}">
+                                <h:column>
+                                    <f:facet name="header" >
+                                        <h:outputText  value="Código Forma Pagamento" />
+                                    </f:facet>
+                                    <h:outputText  value="#{item.codFormaPagamento}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header" >
+                                        <h:outputText value="Forma Pagamento" dir="ltr" />
+                                    </f:facet>
+                                    <h:outputText dir="ltr" value="#{item.descricao}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="UF" />
+                                    </f:facet>
+                                    <h:outputText value="#{item.descricaoReduzida}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Ações"/>
+                                    </f:facet>
+                                    <h:commandLink value= "Alterar" accesskey="A" styleClass="button" action="#{FormaPagamentoBo.iniciaEditFormaPg}" >
+                                        <f:setPropertyActionListener target="#{FormaPagamentoBo.selectFormaPagamento}" value="#{item}"/>
+                                    </h:commandLink>
+                                </h:column>
+
+                            </h:dataTable>
+
+                            <br/>
+                        <h:commandLink value= "Menu Inicial" action="gotoMain" /><br/></font>
+
+
+                </h:form>
+
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

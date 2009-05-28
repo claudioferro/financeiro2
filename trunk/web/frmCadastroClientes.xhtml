@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:custom="http://faces.componete/jsf"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+
+    <body>
+
+        <ui:composition template="./Template.xhtml">
+            <ui:param name="title" value="Sistema Financeiro Web"/>
+            <ui:define name="content">
+
+                <h:form name="form1" id="form1" >
+                    <fieldset class="camposCompleto"><legend >DADOS DO CLIENTE</legend>
+                        <table  align="center" border="0" >
+                            <tr><h:messages/>
+                                <td  class="label"><label>código cliente:</label></td>
+                                <td >
+                                    <h:inputText readonly="true" id="codCliente" value="#{ClienteBo.selectCliente.codCliente}" styleClass="textFieldPequeno" >
+                                </h:inputText>  </td>
+                                <td class="label" align="right">  Categoria:</td>
+                                <td align="left" >
+                                    <h:selectOneMenu  id="categoria" name="categoria" class="comboBox" value="#{ClienteBo.selectCliente.categoria}">
+                                        <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                        <f:selectItem itemLabel="Fisica" itemValue="F" />
+                                        <f:selectItem itemLabel="Juridica" itemValue="J" />
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label" ><label>CPF/CNPJ:</label></td>
+                                <td>
+                                <h:inputText value="#{ClienteBo.selectCliente.cpfCnpj}"  id="cpfCnpj" styleClass="textFieldPequeno" onkeypress="return formataCpfCnpj(this)"/> </td>
+                                <td class="label"><label>Insc. Estadual</label></td>
+                                <td><h:inputText value="#{ClienteBo.selectCliente.inscricaoEstadual}" size="16" id="inscricaoEstadual" maxlength="16" styleClass="textFieldPequeno"/> </td>
+                            </tr>
+                            <tr>
+                                <td class="label" >Nome</td>
+                                <td ><h:inputText  value="#{ClienteBo.selectCliente.nome}" styleClass="textFieldEscritas" id="nome" maxlength="50"/>  </td>
+                            </tr>
+                            <tr>
+                                <td class="label">Nome Fantasia</td>
+                                <td><h:inputText  value="#{ClienteBo.selectCliente.nomeFantasia}" styleClass="textFieldEscritas" id="nomeFantasia" maxlength="50"/>  </td>
+                            </tr>
+                            <tr>
+                                <td class="label" >Contato</td>
+                                <td><h:inputText value="#{ClienteBo.selectCliente.contato}" styleClass="textFieldEscritas" id="contato" maxlength="50"  />  </td>
+                                <td class="label" >Data Nasc.</td>
+                                <td>
+                                    <rich:calendar converterMessage="Data Invalida"     value="#{ClienteBo.selectCliente.dataNascimento}"
+                                                   inputClass="inputCalendar" datePattern="dd/MM/yyyy"
+                                                   popup="true">
+                                    </rich:calendar>
+
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td  class="label" >Sexo</td>
+                                <td>
+                                    <h:selectOneMenu   name="sexo" class="comboBox" value="#{ClienteBo.selectCliente.sexo}">
+                                        <f:selectItem itemLabel="Selecione" itemValue=""/>
+                                        <f:selectItem itemLabel="Masculino" itemValue="M" />
+                                        <f:selectItem itemLabel="Feminino" itemValue="F" />
+                                    </h:selectOneMenu>
+                                </td>
+                                <td  class="label" >Tipo Cliente</td>
+                                <td>
+                                    <h:selectOneMenu defaultLabel="Selecione" converterMessage="Tipo de Cliente invalido" name="tipoCliente" id="tipoCliente" class="comboBox" value="#{ClienteBo.selectCliente.tipoCliente}" >
+                                        <f:converter converterId="TipoClienteConverter"/>
+                                        <f:selectItems value="#{ClienteBo.tipoClienteSystem}" />
+                                    </h:selectOneMenu>
+
+                                </td>
+                            </tr>
+                            <tr>
+                                <td  class="label" >Atividade</td>
+                                <td>
+                                    <h:inputText  value="#{ClienteBo.selectCliente.atividade}" styleClass="textFieldEscritas" id="atividade" maxlength="50"/>
+                                </td>
+
+                            </tr>
+                            <tr>
+                                <td class="label" >Logradouro</td>
+                                <td >
+                                    <h:inputText  value="#{ClienteBo.selectCliente.logradouro}" styleClass="textFieldEscritas" id="logradouro" maxlength="50"/>
+                                </td>
+                                <td class="label" >Complemento</td>
+                                <td >
+                                    <h:inputText  value="#{ClienteBo.selectCliente.complemento}" styleClass="textFieldGrande" id="complemento" maxlength="50"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label" >Bairro</td>
+                                <td >
+                                    <h:inputText  value="#{ClienteBo.selectCliente.bairro}" styleClass="textFieldEscritas" id="bairro" maxlength="50"/>
+                                </td>
+                                <td class="label" >Cep</td>
+                                <td >
+                                    <h:inputText  value="#{ClienteBo.selectCliente.cep}" styleClass="textFieldPequeno" id="cep" onkeypress="return formataCampo(this,14,9)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label" >UF</td>
+                                <td ><h:selectOneMenu styleClass="comboBoxUf"  value="#{ClienteBo.uf}">
+                                        <f:selectItem itemLabel="Selecione" itemValue="GO"/>
+                                        <f:selectItem itemLabel="AC" itemValue="AC"/>
+                                        <f:selectItem itemLabel="AL" itemValue="AL"/>
+                                        <f:selectItem itemLabel="AP" itemValue="AP"/>
+                                        <f:selectItem itemLabel="AM" itemValue="AM"/>
+                                        <f:selectItem itemLabel="BA" itemValue="CA"/>
+                                        <f:selectItem itemLabel="CE" itemValue="CE"/>
+                                        <f:selectItem itemLabel="DF" itemValue="DF"/>
+                                        <f:selectItem itemLabel="ES" itemValue="ES"/>
+                                        <f:selectItem itemLabel="GO" itemValue="GO"/>
+                                        <f:selectItem itemLabel="MA" itemValue="MA"/>
+                                        <f:selectItem itemLabel="MG" itemValue="MG"/>
+                                        <f:selectItem itemLabel="MS" itemValue="MT"/>
+                                        <f:selectItem itemLabel="MT" itemValue="MS"/>
+                                        <f:selectItem itemLabel="PA" itemValue="PA"/>
+                                        <f:selectItem itemLabel="PB" itemValue="PB"/>
+                                        <f:selectItem itemLabel="PE" itemValue="PE"/>
+                                        <f:selectItem itemLabel="PI" itemValue="PR"/>
+                                        <f:selectItem itemLabel="PR" itemValue="PI"/>
+                                        <f:selectItem itemLabel="RJ" itemValue="RJ"/>
+                                        <f:selectItem itemLabel="RN" itemValue="RN"/>
+                                        <f:selectItem itemLabel="RS" itemValue="RS"/>
+                                        <f:selectItem itemLabel="RO" itemValue="RO"/>
+                                        <f:selectItem itemLabel="RR" itemValue="RR"/>
+                                        <f:selectItem itemLabel="SC" itemValue="SC"/>
+                                        <f:selectItem itemLabel="SE" itemValue="SE"/>
+                                        <f:selectItem itemLabel="SP" itemValue="SP"/>
+                                        <f:selectItem itemLabel="TO" itemValue="TO"/>
+                                        <a4j:support event="onchange" ajaxSingle="true" action="#{ClienteBo.actionCarregarCidade}"  reRender="cidade"/>
+
+                                    </h:selectOneMenu>
+                                </td>
+                                <td class="label" >Cidades</td>
+                                <td>
+                                    <h:selectOneMenu converterMessage="Cidade invalida" name="cidade" id="cidade" class="comboBox" value="#{ClienteBo.selectCliente.cidade}">
+                                        <f:converter converterId="CidadeConverter"/>
+                                        <f:selectItems value="#{ClienteBo.cidadesSystem}"/>
+                                    </h:selectOneMenu>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="label" >Telefone 1</td>
+                                <td> <h:inputText  value="#{ClienteBo.selectCliente.telefone}" styleClass="textFieldPequeno" id="telefone1" onkeypress="return formataCampo(this,5,13)"/></td>
+                                <td class="label" >Telefone 2</td>
+                                <td> <h:inputText  value="#{ClienteBo.selectCliente.telefoneAlternativo}" styleClass="textFieldPequeno" id="telefone2" onkeypress="return formataCampo(this,12,13)"/></td>
+                            </tr>
+                            <tr>
+                                <td class="label" >Fax</td>
+                                <td> <h:inputText  value="#{ClienteBo.selectCliente.fax}" styleClass="textFieldPequeno" id="fax" onkeypress="return formataCampo(this,12,13)"/></td>
+                                <td class="label" >Celular</td>
+                                <td> <h:inputText  value="#{ClienteBo.selectCliente.celular}" styleClass="textFieldPequeno" id="celular" onkeypress="return formataCampo(this,12,13)"/></td>
+                            </tr>
+                            <tr>
+                                <td class="label" >Email</td>
+                                <td> <h:inputText  value="#{ClienteBo.selectCliente.email}" styleClass="textFieldGrande" id="Email" maxlength="50"/> </td>
+                                <td class="label" >Email Alternatio</td>
+                                <td> <h:inputText  value="#{ClienteBo.selectCliente.emailAlternativo}" styleClass="textFieldGrande" id="emailalternativo" maxlength="50"/></td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                    <h:outputText styleClass="labelAlerta" value="#{ClienteBo.mensagem}" />
+                    <custom:botoesCadastro
+                        formulario="#{ClienteBo}"
+                        formulario2="#{ClienteBo.selectCliente}"
+                        labelBotaolimpar="Limpar"
+                        labelBotaoconsultar="Consultar"
+                        labelBotaoexcluir="Excluir"
+                        labelBotaosalvar="Salvar"
+                        labelBotaofechar="Fechar"/>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+
+    </body>
+</html>

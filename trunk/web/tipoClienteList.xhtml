@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j">
+      <link href="./css/default.css" rel="stylesheet" type="text/css" />
+    
+    <body>
+        
+        <ui:composition template="./Template.xhtml">
+            <ui:param name="title" value="Lista de Cidades"/>
+            <ui:define name="content">
+                <h:form>
+                    <center>
+                        <br/>
+                        <font face="Arial"  size="4" class="titulosForm">  Lista de Tipo de Clientes</font> </center>
+                        <br/>
+                        <br/>
+                        <font face="Arial" >
+                            <br/>
+                            <h:dataTable  rowClasses="classeOne,classTwo"  var="item" value="#{TipoClienteBo.tipoClientes}">
+                                <h:column>
+                                    <f:facet name="header" >
+                                        <h:outputText  value="Código Tipo de Cliente" />
+                                    </f:facet>
+                                    <h:outputText  value="#{item.codTipoCliente}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header" >
+                                        <h:outputText value="Tipo" dir="ltr" />
+                                    </f:facet>
+                                    <h:outputText dir="ltr" value="#{item.descricaoReduzida}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Descrição completa" />
+                                    </f:facet>
+                                    <h:outputText value="#{item.descricao}"/>
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Ações"/>
+                                    </f:facet>
+                                    <h:commandButton value= "Alterar" accesskey="A" styleClass="button" action="#{TipoClienteBo.iniciaEditTipocliente}" >
+                                        <f:setPropertyActionListener target="#{TipoClienteBo.selectTipocliente}" value="#{item}"/>
+                                    </h:commandButton>
+                                </h:column>
+
+                            </h:dataTable>
+
+                            <br/>
+                        <h:commandLink value= "Menu Inicial" action="gotoMain" /><br/></font>
+
+
+                </h:form>
+
+            </ui:define>
+
+
+        </ui:composition>
+        
+    </body>
+</html>
