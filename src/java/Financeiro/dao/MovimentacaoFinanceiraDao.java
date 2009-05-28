@@ -44,6 +44,9 @@ public class MovimentacaoFinanceiraDao extends GenericDao implements IMovimentac
     public List<MovimentacaoFinanceiraTo> consultar_valor(Double valor) {
         return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov where mov.valorLancamento = ? ", valor);
     }
+     public List<MovimentacaoFinanceiraTo> consultar_nome(String nome) {
+        return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov where mov.clienteFornecedor.nome like ? ", nome);
+    }
     public void alterar(MovimentacaoFinanceiraTo movimentacaoFinanceira)
     {
         saveorUpdatePojo(movimentacaoFinanceira);

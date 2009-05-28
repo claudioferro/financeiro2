@@ -1,6 +1,5 @@
 package Financeiro.bo;
 
-
 import Financeiro.dao.BancosDao;
 import Financeiro.dao.CentroCustoDao;
 import Financeiro.dao.ContaCorrenteDao;
@@ -36,9 +35,16 @@ public class MovimentacaoFinanceiraBo {
     private String tipoConsulta = "cod";
     private String tipo = "C";
     private boolean disabled = true;
-    //private boolean renderedSeleciona = false;
-
+    private boolean renderedSeleciona = false;
     public boolean botaoSeleciona = false;
+
+    public boolean isRenderedSeleciona() {
+        return renderedSeleciona;
+    }
+
+    public void setRenderedSeleciona(boolean renderedSeleciona) {
+        this.renderedSeleciona = renderedSeleciona;
+    }
 
     public MovimentacaoFinanceiraBo() {
     }
@@ -70,21 +76,21 @@ public class MovimentacaoFinanceiraBo {
     }
 
     public String salvar() {
-        try{
+        try {
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
             String object = (String) session.getAttribute("codEmpresa");
             int codEmpresa = Integer.parseInt(object);
 
             if (getStatus().equals("s")) {
-                if(selectMovFinanceira.getOperacao().equals("")){
+                if (selectMovFinanceira.getOperacao().equals("")) {
                     setMensagem("Campo Operação obrigatorio!");
                     return "gotoCadMovFinanceira";
                 }
-                if(selectMovFinanceira.getBanco().getNumBanco().equals("")){
+                if (selectMovFinanceira.getBanco().getNumBanco().equals("")) {
                     setMensagem("Campo Banco obrigatorio!");
                     return "gotoCadMovFinanceira";
                 }
-                if(ValidaData.Nascimento(selectMovFinanceira.getDataLancamento()) == false){
+                if (ValidaData.Nascimento(selectMovFinanceira.getDataLancamento()) == false) {
                     setMensagem("Data de Lançamento inválida!");
                     return "gotoCadMovFinanceira";
                 }
@@ -92,28 +98,29 @@ public class MovimentacaoFinanceiraBo {
                     setMensagem("Campo Valor obrigatorio e deve ser maior que 0(zero)!");
                     return "gotoCadMovFinanceira";
                 }
-                if(selectMovFinanceira.getContaCorrente().getCodContaCorrente() == 0){
+                if (selectMovFinanceira.getContaCorrente().getCodContaCorrente() == 0) {
                     setMensagem("Campo Conta Corrente obrigatorio!");
                     return "gotoCadMovFinanceira";
                 }
-                if(selectMovFinanceira.getCentroCusto().getCodCentroCusto() == 0){
+                if (selectMovFinanceira.getCentroCusto().getCodCentroCusto() == 0) {
                     setMensagem("Campo Centro de Custo obrigatorio!");
                     return "gotoCadMovFinanceira";
                 }
                 selectMovFinanceira.getEmpresa().setCodEmpresa(codEmpresa);
                 movFinanceiraDao.salvar(getSelectMovFinanceira());
                 setStatus("a");
+                limpar();
                 setMensagem("Registro incluido com sucesso!");
             } else {
-                if(selectMovFinanceira.getOperacao().equals("")){
+                if (selectMovFinanceira.getOperacao().equals("")) {
                     setMensagem("Campo Operação obrigatorio!");
                     return "gotoCadMovFinanceira";
                 }
-                if(selectMovFinanceira.getBanco().getNumBanco().equals("")){
+                if (selectMovFinanceira.getBanco().getNumBanco().equals("")) {
                     setMensagem("Campo Banco obrigatorio!");
                     return "gotoCadMovFinanceira";
                 }
-                if(ValidaData.Nascimento(selectMovFinanceira.getDataLancamento()) == false){
+                if (ValidaData.Nascimento(selectMovFinanceira.getDataLancamento()) == false) {
                     setMensagem("Data de Lançamento inválida!");
                     return "gotoCadMovFinanceira";
                 }
@@ -121,22 +128,23 @@ public class MovimentacaoFinanceiraBo {
                     setMensagem("Campo Valor obrigatorio e deve ser maior que 0(zero)!");
                     return "gotoCadMovFinanceira";
                 }
-                if(selectMovFinanceira.getContaCorrente().getCodContaCorrente() == 0){
+                if (selectMovFinanceira.getContaCorrente().getCodContaCorrente() == 0) {
                     setMensagem("Campo Conta Corrente obrigatorio!");
                     return "gotoCadMovFinanceira";
                 }
-                if(selectMovFinanceira.getCentroCusto().getCodCentroCusto() == 0){
+                if (selectMovFinanceira.getCentroCusto().getCodCentroCusto() == 0) {
                     setMensagem("Campo Centro de Custo obrigatorio!");
                     return "gotoCadMovFinanceira";
                 }
                 movFinanceiraDao.alterar(getSelectMovFinanceira());
                 setStatus("a");
+                limpar();
                 setMensagem("Registro alterado com sucesso!");
             }
             //Limpar cache
             movFinanceiras = null;
             return "gotoCadMovFinanceira";
-        }catch(Exception e){
+        } catch (Exception e) {
             setMensagem("Ocorreu um erro interno no Servidor!");
             return "gotoFornecedor";
         }
@@ -150,13 +158,15 @@ public class MovimentacaoFinanceiraBo {
     }
 
     public String excluir() {
-        try{
+        try {
             movFinanceiraDao.excluir(getSelectMovFinanceira());
-            setMensagem("Registro excluido com sucesso!");
-            movFinanceiras = null;
             limpar();
+            setMensagem("Registro excluido com sucesso!");
+            //movFinanceiras = null;
+            
             return "";
-        }catch(Exception e){
+        } catch (Exception e) {
+            limpar();
             setMensagem("Ocorreu um erro interno no Servidor!");
             return "gotoFornecedor";
         }
@@ -164,7 +174,7 @@ public class MovimentacaoFinanceiraBo {
 
     public String fechar() {
         setBotaoSeleciona(false);
-        movFinanceiras = null;        
+        movFinanceiras = null;
         return "gotoMain";
     }
 
@@ -184,6 +194,7 @@ public class MovimentacaoFinanceiraBo {
     public String consultarClienteFornecedor() {
         setBotaoSeleciona(true);
         if (getTipo().equals("C")) {
+            setRenderedSeleciona(true);
             clienteBo.consultar();
             return "cons_cliente";
         } else {
@@ -206,13 +217,16 @@ public class MovimentacaoFinanceiraBo {
     public String consult_Mov() {
         movFinanceiras = null;
         selectMovFinanceira = new MovimentacaoFinanceiraTo();
-        if (valConsulta.equals("")){
+
+        if (valConsulta.equals("")) {
             movFinanceiras = movFinanceiraDao.consultar();
-        }else
-        if (tipoConsulta.equals("valor") && !valConsulta.equals("")) {
+        } else if (tipoConsulta.equals("valor") && !valConsulta.equals("")) {
             movFinanceiras = movFinanceiraDao.consultar_valor(Double.parseDouble(valConsulta));
         } else if (tipoConsulta.equals("cod") && !valConsulta.equals("")) {
             movFinanceiras = movFinanceiraDao.consultar_cod(Integer.parseInt(valConsulta));
+        } else if (tipoConsulta.equals("clie") && !valConsulta.equals("")) {
+            movFinanceiras = movFinanceiraDao.consultar_nome(valConsulta.toUpperCase()+ "%");
+
         }
         return "cons_cons_mov";
     }
@@ -315,13 +329,13 @@ public class MovimentacaoFinanceiraBo {
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
     }
-/*
+    /*
     public boolean isRenderedSeleciona() {
-        return renderedSeleciona;
+    return renderedSeleciona;
     }
 
     public void setRenderedSeleciona(boolean renderedSeleciona) {
-        this.renderedSeleciona = renderedSeleciona;
+    this.renderedSeleciona = renderedSeleciona;
     }
- */
+     */
 }

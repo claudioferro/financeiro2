@@ -50,11 +50,12 @@ public class AuthFilter implements Filter {
         //try {
            chain.doFilter(request, response);
         //} catch (Throwable t) {
-            // If an exception is thrown somewhere down the filter chain,
+              // If an exception is thrown somewhere down the filter chain,
             // we still want to execute our after processing, and then
             // rethrow the problem after that.
 
-          //  System.out.println(t);
+           // t.printStackTrace();
+
         //}
 
     }

@@ -38,6 +38,8 @@ public class UsuarioBo {
             setMensagem("Usuário ok");
             return "gotoMain";
         } else {
+            setCodEmpresa("");
+            setUser("");
             setMensagem("Usuário ou senha incorreto!");
             return "reload";
         }
