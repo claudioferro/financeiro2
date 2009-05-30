@@ -1,472 +1,3 @@
-/*==============================================================*/
-/* DBMS name:      Sybase AS Anywhere 9                         */
-/* Created on:     27/5/2009 22:36:04                           */
-/*==============================================================*/
-
-
-if exists(select 1 from sys.sysforeignkey where role='FK_CONTAS_RELATIONS_TIPODOCU') then
-    alter table CONTAS
-       delete foreign key FK_CONTAS_RELATIONS_TIPODOCU
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_CONTAS_RELATIONS_FORNECED') then
-    alter table CONTAS
-       delete foreign key FK_CONTAS_RELATIONS_FORNECED
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_CONTAS_RELATIONS_MOVIMENT') then
-    alter table CONTAS
-       delete foreign key FK_CONTAS_RELATIONS_MOVIMENT
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_CONTAS_RELATIONS_CONTACOR') then
-    alter table CONTAS
-       delete foreign key FK_CONTAS_RELATIONS_CONTACOR
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_CONTAS_RELATIONS_CENTROCU') then
-    alter table CONTAS
-       delete foreign key FK_CONTAS_RELATIONS_CENTROCU
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_CONTAS_RELATIONS_BANCOS') then
-    alter table CONTAS
-       delete foreign key FK_CONTAS_RELATIONS_BANCOS
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_CONTAS_RELATIONS_FORMAPAG') then
-    alter table CONTAS
-       delete foreign key FK_CONTAS_RELATIONS_FORMAPAG
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_CONTAS_RELATIONS_EMPRESA') then
-    alter table CONTAS
-       delete foreign key FK_CONTAS_RELATIONS_EMPRESA
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_EMPRESA_RELATIONS_CIDADES') then
-    alter table EMPRESA
-       delete foreign key FK_EMPRESA_RELATIONS_CIDADES
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_FILIAL_RELATIONS_EMPRESA') then
-    alter table FILIAL
-       delete foreign key FK_FILIAL_RELATIONS_EMPRESA
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_FORNECED_RELATIONS_TIPOCLIE') then
-    alter table FORNECEDORCLIENTE
-       delete foreign key FK_FORNECED_RELATIONS_TIPOCLIE
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_FORNECED_RELATIONS_CIDADES') then
-    alter table FORNECEDORCLIENTE
-       delete foreign key FK_FORNECED_RELATIONS_CIDADES
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_MOVIMENT_RELATIONS_CONTACOR') then
-    alter table MOVIMENTACAOFINANCEIRA
-       delete foreign key FK_MOVIMENT_RELATIONS_CONTACOR
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_MOVIMENT_RELATIONS_BANCOS') then
-    alter table MOVIMENTACAOFINANCEIRA
-       delete foreign key FK_MOVIMENT_RELATIONS_BANCOS
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_MOVIMENT_RELATIONS_CENTROCU') then
-    alter table MOVIMENTACAOFINANCEIRA
-       delete foreign key FK_MOVIMENT_RELATIONS_CENTROCU
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_MOVIMENT_RELATIONS_FORNECED') then
-    alter table MOVIMENTACAOFINANCEIRA
-       delete foreign key FK_MOVIMENT_RELATIONS_FORNECED
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_MOVIMENT_RELATIONS_EMPRESA') then
-    alter table MOVIMENTACAOFINANCEIRA
-       delete foreign key FK_MOVIMENT_RELATIONS_EMPRESA
-end if;
-
-if exists(select 1 from sys.sysforeignkey where role='FK_USUARIO_RELATIONS_CIDADES') then
-    alter table USUARIO
-       delete foreign key FK_USUARIO_RELATIONS_CIDADES
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='BANCOS_PK'
-     and t.table_name='BANCOS'
-) then
-   drop index BANCOS.BANCOS_PK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='CENTROCUSTOS_PK'
-     and t.table_name='CENTROCUSTOS'
-) then
-   drop index CENTROCUSTOS.CENTROCUSTOS_PK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='CIDADES_PK'
-     and t.table_name='CIDADES'
-) then
-   drop index CIDADES.CIDADES_PK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='CONTACORRENTE_PK'
-     and t.table_name='CONTACORRENTE'
-) then
-   drop index CONTACORRENTE.CONTACORRENTE_PK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='CONTAS_PK'
-     and t.table_name='CONTAS'
-) then
-   drop index CONTAS.CONTAS_PK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_10_FK'
-     and t.table_name='CONTAS'
-) then
-   drop index CONTAS.RELATIONSHIP_10_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_15_FK'
-     and t.table_name='CONTAS'
-) then
-   drop index CONTAS.RELATIONSHIP_15_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_2_FK'
-     and t.table_name='CONTAS'
-) then
-   drop index CONTAS.RELATIONSHIP_2_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_3_FK'
-     and t.table_name='CONTAS'
-) then
-   drop index CONTAS.RELATIONSHIP_3_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_4_FK'
-     and t.table_name='CONTAS'
-) then
-   drop index CONTAS.RELATIONSHIP_4_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_5_FK'
-     and t.table_name='CONTAS'
-) then
-   drop index CONTAS.RELATIONSHIP_5_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_6_FK'
-     and t.table_name='CONTAS'
-) then
-   drop index CONTAS.RELATIONSHIP_6_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_7_FK'
-     and t.table_name='CONTAS'
-) then
-   drop index CONTAS.RELATIONSHIP_7_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='EMPRESA_PK'
-     and t.table_name='EMPRESA'
-) then
-   drop index EMPRESA.EMPRESA_PK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_8_FK'
-     and t.table_name='EMPRESA'
-) then
-   drop index EMPRESA.RELATIONSHIP_8_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_16_FK'
-     and t.table_name='FILIAL'
-) then
-   drop index FILIAL.RELATIONSHIP_16_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='FORMAPAGAMENTO_PK'
-     and t.table_name='FORMAPAGAMENTO'
-) then
-   drop index FORMAPAGAMENTO.FORMAPAGAMENTO_PK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='FORNECEDORCLIENTE_PK'
-     and t.table_name='FORNECEDORCLIENTE'
-) then
-   drop index FORNECEDORCLIENTE.FORNECEDORCLIENTE_PK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_11_FK'
-     and t.table_name='FORNECEDORCLIENTE'
-) then
-   drop index FORNECEDORCLIENTE.RELATIONSHIP_11_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_12_FK'
-     and t.table_name='FORNECEDORCLIENTE'
-) then
-   drop index FORNECEDORCLIENTE.RELATIONSHIP_12_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='MOVIMENTACAOFINANCEIRA_PK'
-     and t.table_name='MOVIMENTACAOFINANCEIRA'
-) then
-   drop index MOVIMENTACAOFINANCEIRA.MOVIMENTACAOFINANCEIRA_PK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_13_FK'
-     and t.table_name='MOVIMENTACAOFINANCEIRA'
-) then
-   drop index MOVIMENTACAOFINANCEIRA.RELATIONSHIP_13_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_14_FK'
-     and t.table_name='MOVIMENTACAOFINANCEIRA'
-) then
-   drop index MOVIMENTACAOFINANCEIRA.RELATIONSHIP_14_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_17_FK'
-     and t.table_name='MOVIMENTACAOFINANCEIRA'
-) then
-   drop index MOVIMENTACAOFINANCEIRA.RELATIONSHIP_17_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_18_FK'
-     and t.table_name='MOVIMENTACAOFINANCEIRA'
-) then
-   drop index MOVIMENTACAOFINANCEIRA.RELATIONSHIP_18_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_1_FK'
-     and t.table_name='MOVIMENTACAOFINANCEIRA'
-) then
-   drop index MOVIMENTACAOFINANCEIRA.RELATIONSHIP_1_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='TIPOCLIENTE_PK'
-     and t.table_name='TIPOCLIENTE'
-) then
-   drop index TIPOCLIENTE.TIPOCLIENTE_PK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='TIPODOCUMENTO_PK'
-     and t.table_name='TIPODOCUMENTO'
-) then
-   drop index TIPODOCUMENTO.TIPODOCUMENTO_PK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='RELATIONSHIP_9_FK'
-     and t.table_name='USUARIO'
-) then
-   drop index USUARIO.RELATIONSHIP_9_FK
-end if;
-
-if exists(
-   select 1 from sys.sysindex i, sys.systable t
-   where i.table_id=t.table_id 
-     and i.index_name='USUARIO_PK'
-     and t.table_name='USUARIO'
-) then
-   drop index USUARIO.USUARIO_PK
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='BANCOS'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table BANCOS
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='CENTROCUSTOS'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table CENTROCUSTOS
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='CIDADES'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table CIDADES
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='CONTACORRENTE'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table CONTACORRENTE
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='CONTAS'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table CONTAS
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='EMPRESA'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table EMPRESA
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='FILIAL'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table FILIAL
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='FORMAPAGAMENTO'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table FORMAPAGAMENTO
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='FORNECEDORCLIENTE'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table FORNECEDORCLIENTE
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='MOVIMENTACAOFINANCEIRA'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table MOVIMENTACAOFINANCEIRA
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='TIPOCLIENTE'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table TIPOCLIENTE
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='TIPODOCUMENTO'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table TIPODOCUMENTO
-end if;
-
-if exists(
-   select 1 from sys.systable 
-   where table_name='USUARIO'
-     and table_type in ('BASE', 'GBL TEMP')
-) then
-    drop table USUARIO
-end if;
 
 /*==============================================================*/
 /* Table: BANCOS                                                */
@@ -490,7 +21,7 @@ NUMBANCO ASC
 /*==============================================================*/
 create table CENTROCUSTOS 
 (
-    CODCENTROCUSTO       integer                        not null default autoincrement,
+    CODCENTROCUSTO       integer                        not null,
     DESCRICAOCENTROCUSTO varchar(50),
     CODIGOCENTROCUSTO    varchar(16),
     constraint PK_CENTROCUSTOS primary key (CODCENTROCUSTO)
@@ -526,7 +57,7 @@ MUNICIPIO ASC
 /*==============================================================*/
 create table CONTACORRENTE 
 (
-    CODCONTACORRENTE     integer                        not null default autoincrement,
+    CODCONTACORRENTE     integer                        not null,
     DESCRICAO            varchar(50),
     AGENCIA              varchar(30),
     NUMEROCONTACORRENTE  integer,
@@ -547,7 +78,7 @@ CODCONTACORRENTE ASC
 /*==============================================================*/
 create table CONTAS 
 (
-    CODCONTAS            integer                        not null default autoincrement,
+    CODCONTAS            integer                        not null,
     CODEMPRESA           integer,
     CODMOVIMENTACAOFINANCEIRA integer,
     CODFORNECEDORCLIENTE integer,
@@ -643,7 +174,7 @@ CODFORNECEDORCLIENTE ASC
 /*==============================================================*/
 create table EMPRESA 
 (
-    CODEMPRESA           integer                        not null default autoincrement,
+    CODEMPRESA           integer                        not null,
     MUNICIPIO            varchar(10),
     RAZAOSOCIAL          varchar(50),
     NOMEFANTASIA         varchar(50),
@@ -699,7 +230,7 @@ CODEMPRESA ASC
 /*==============================================================*/
 create table FORMAPAGAMENTO 
 (
-    CODFORMAPAGAMENTO    integer                        not null default autoincrement,
+    CODFORMAPAGAMENTO    integer                        not null,
     DESCRICAO            varchar(50),
     DESCRICAOREDUZIDA    varchar(2),
     constraint PK_FORMAPAGAMENTO primary key (CODFORMAPAGAMENTO)
@@ -717,7 +248,7 @@ CODFORMAPAGAMENTO ASC
 /*==============================================================*/
 create table FORNECEDORCLIENTE 
 (
-    CODFORNECEDORCLIENTE integer                        not null default autoincrement,
+    CODFORNECEDORCLIENTE integer                        not null,
     CODTIPOCLIENTE       integer,
     MUNICIPIO            varchar(10),
     CATEGORIA            varchar(50),
@@ -770,7 +301,7 @@ MUNICIPIO ASC
 /*==============================================================*/
 create table MOVIMENTACAOFINANCEIRA 
 (
-    CODMOVIMENTACAOFINANCEIRA integer                        not null default autoincrement,
+    CODMOVIMENTACAOFINANCEIRA integer                        not null,
     CODEMPRESA           integer,
     CODCONTACORRENTE     integer,
     CODFORNECEDORCLIENTE integer,
@@ -831,7 +362,7 @@ CODEMPRESA ASC
 /*==============================================================*/
 create table TIPOCLIENTE 
 (
-    CODTIPOCLIENTE       integer                        not null default autoincrement,
+    CODTIPOCLIENTE       integer                        not null,
     DESCRICAOREDUZIDA    varchar(2),
     DESCRICAO            varchar(50),
     constraint PK_TIPOCLIENTE primary key (CODTIPOCLIENTE)
@@ -849,7 +380,7 @@ CODTIPOCLIENTE ASC
 /*==============================================================*/
 create table TIPODOCUMENTO 
 (
-    CODTIPODOCUMENTO     integer                        not null default autoincrement,
+    CODTIPODOCUMENTO     integer                        not null,
     DESCRICAO            varchar(50),
     DESCRICAOREDUZIDA    varchar(2),
     constraint PK_TIPODOCUMENTO primary key (CODTIPODOCUMENTO)
@@ -867,7 +398,7 @@ CODTIPODOCUMENTO ASC
 /*==============================================================*/
 create table USUARIO 
 (
-    CODUSUARIO           integer                        not null default autoincrement,
+    CODUSUARIO           integer                        not null,
     MUNICIPIO            varchar(10),
     NOME                 varchar(50),
     CPF                  varchar(15),
