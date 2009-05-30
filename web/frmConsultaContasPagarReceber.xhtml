@@ -5,14 +5,12 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:custom="http://faces.componete/jsf"
-       xmlns:rich="http://richfaces.org/rich"
+      xmlns:rich="http://richfaces.org/rich"
       xmlns:a4j="http://richfaces.org/a4j">
     <link href="./css/default.css" rel="stylesheet" type="text/css" />
-    
+
     <body>
-        
         <ui:composition template="./Template.xhtml">
-            
             <ui:param name="title" value="Consulta de Contas Pagar/Receber"/>
             <ui:define name="content">
                 <h:form>
@@ -26,7 +24,6 @@
                                         <f:selectItem itemLabel="N° Doc." itemValue="numDoc" />
                                         <f:selectItem itemLabel="Valor" itemValue="valor" />
                                         <f:selectItem itemLabel="Clie/Forn" itemValue="clie" />
-                                        <f:selectItem itemLabel="Data Venc." itemValue="data" />                                        
                                     </h:selectOneRadio>
                                 </fieldset>
                             </td>
@@ -37,20 +34,18 @@
                                         <tr>
                                             <td class="label">Conteúdo:</td>
                                             <td><h:inputText rendered="#{ContasPagarReceberBo.rederConsulta}"  value="#{ContasPagarReceberBo.valConsulta}" styleClass="textFieldEscritas" id="Descricao" maxlength="50">
-                                                <f:convertNumber   />
                                                 </h:inputText>
 
                                                 <h:inputText rendered="#{ContasPagarReceberBo.rederConsultaData}" value="#{ContasPagarReceberBo.valConsulta}" styleClass="textFieldEscritas" id="DataVencimento" maxlength="10">
-                                                <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                                                    <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
                                                 </h:inputText>
                                             </td>
                                         </tr>
                                         <tr>
-
                                             <td>
                                             </td>
                                             <td><h:messages/>
-                                            <h:commandButton accesskey="P" styleClass="button" value="Pesquisar" action="#{ContasPagarReceberBo.consult_ContasPagarReceber}" />&#160;&#160;
+                                                <h:commandButton accesskey="P" styleClass="button" value="Pesquisar" action="#{ContasPagarReceberBo.consult_ContasPagarReceber}" />&#160;&#160;
                                                 <h:commandButton accesskey="L" styleClass="button" value="Limpar" action="#{ContasPagarReceberBo.limparCons}"/>&#160;&#160;
                                                 <h:commandButton accesskey="V" styleClass="button" value="Voltar" action="#{ContasPagarReceberBo.addContas}"/>&#160;&#160;
                                             </td>
@@ -83,14 +78,16 @@
                                 <h:outputText value="Data Venc."/>
                             </f:facet>
                             <h:outputText value="#{item.dataVencimento}">
-                            <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
+                                <f:convertDateTime pattern="dd/MM/yyyy" type="date" />
                             </h:outputText>
                         </rich:column>
                         <rich:column sortBy="#{item.valor}">
                             <f:facet name="header">
                                 <h:outputText value="Valor"/>
                             </f:facet>
-                            <h:outputText value="#{item.valor}"/>
+                            <h:outputText value="#{item.valor}">
+                                <f:convertNumber/>
+                            </h:outputText>
                         </rich:column>
                         <rich:column>
                             <f:facet name="header">
@@ -99,7 +96,6 @@
                             <h:commandButton value= "Alterar" accesskey="A" styleClass="button" action="#{ContasPagarReceberBo.iniciaEditContas}" >
                                 <f:setPropertyActionListener target="#{ContasPagarReceberBo.selectContasPagarReceber}" value="#{item}"/>
                             </h:commandButton>
-
                         </rich:column>
                         <f:facet name="footer">
                             <rich:datascroller id="ds"></rich:datascroller>
@@ -107,8 +103,6 @@
                     </rich:dataTable>
                 </h:form>
             </ui:define>
-
         </ui:composition>
-        
     </body>
 </html>
