@@ -22,7 +22,9 @@ import Financeiro.to.TipoDocumentoTo;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpSession;
   
 
 
@@ -70,6 +72,16 @@ public class ContasPagarReceberBo {
 
     private String tipo = "C";
     private boolean disabled = true;
+
+    private String statusConta;
+
+    public String getStatusConta() {
+        return statusConta;
+    }
+
+    public void setStatusConta(String statusConta) {
+        this.statusConta = statusConta;
+    }
 
     public ContasPagarReceberBo() {
         ClienteBo cliente = new ClienteBo();
@@ -165,6 +177,21 @@ public class ContasPagarReceberBo {
 
     public String salvar() {
         try{
+            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+            String object = (String) session.getAttribute("codEmpresa");
+            int codEmpresa = Integer.parseInt(object);
+
+            // Se valor pago for igual ao valor da conta, então status ficará como Liquidado,
+            // caso contrário fica com status Aberto.
+            if (selectContasPagarReceber.getValor() == selectContasPagarReceber.getValorPago()){
+                selectContasPagarReceber.setStatus("L");
+                setStatusConta("LIQUIDADO");
+            }else {
+                selectContasPagarReceber.setStatus("A");
+                setStatusConta("ABERTO");
+            }
+
+
             if (getStatus().equals("s")) {
 
                 if(selectContasPagarReceber.getTipoConta().equals("")){
@@ -207,6 +234,8 @@ public class ContasPagarReceberBo {
                     setMensagem("Campo N.F. obrigatorio!");
                     return "gotoContasPagarReceber";
                 }
+
+                selectContasPagarReceber.getEmpresa().setCodEmpresa(codEmpresa);
                 contasDao.salvar(getSelectContasPagarReceber());
                 setStatus("a");
                 setMensagem("Registro incluido com sucesso!");
@@ -279,6 +308,7 @@ public class ContasPagarReceberBo {
         }
 
         contasDao.excluir(getSelectContasPagarReceber());
+        setStatusConta("");
         setMensagem("Registro excluido com sucesso!");
         //Limpar cache
         contasPagarReceber = null;
@@ -305,6 +335,12 @@ public class ContasPagarReceberBo {
     }
 
     public String iniciaEditContas() {
+
+        if (selectContasPagarReceber.getStatus().equals("L")) {
+            setStatusConta("LIQUDADO");
+        }else
+            setStatusConta("ABERTO");
+
         setStatus("a");
         setMensagem("");
         setDisabled(false);
@@ -324,9 +360,10 @@ public class ContasPagarReceberBo {
         } else if (tipoConsulta.equals("valor") && !valConsulta.equals("")) {
             contasPagarReceber = contasDao.consultar_valor(Float.parseFloat(valConsulta));
         }else if (tipoConsulta.equals("clie") && !valConsulta.equals("")) {
-            contasPagarReceber = contasDao.consultar_clie(Integer.parseInt(valConsulta));
+            contasPagarReceber = contasDao.consultar_clie(valConsulta.toUpperCase()+"%");
         }
-        
+
+
         //else if (tipoConsulta.equals("data") && !valConsulta.equals("")) {
         //    contasPagarReceber = contasDao.consultar_datavenc(valConsulta);
         //}

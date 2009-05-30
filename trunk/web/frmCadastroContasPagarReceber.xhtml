@@ -34,12 +34,8 @@
                                 <tr>
                                     <td class="label" align="right">Status:</td>
                                     <td align="left" >
-                                        <h:selectOneMenu name="status" class="comboBox" value="#{ContasPagarReceberBo.selectContasPagarReceber.status}">
-                                            <f:selectItem itemLabel="Selecione" itemValue=""/>
-                                            <f:selectItem itemLabel="Aberto" itemValue="A" />
-                                            <f:selectItem itemLabel="Liquidado" itemValue="L" />
-                                            <f:selectItem itemLabel="Cancelado" itemValue="C" />
-                                        </h:selectOneMenu>
+                                        <h:inputText readonly="true" id="status" value="#{ContasPagarReceberBo.statusConta}" styleClass="textFieldPequeno" maxlength="20">
+                                        </h:inputText>
                                     </td>
                                     <td  class="label"><label>Número Documento:</label></td>
                                     <td >
@@ -61,8 +57,10 @@
                                     <td align="left" >
                                         <h:selectOneMenu name="situacaodocumento" class="comboBox" value="#{ContasPagarReceberBo.selectContasPagarReceber.situacaoDocumento}">
                                             <f:selectItem itemLabel="Selecione" itemValue=""/>
-                                            <f:selectItem itemLabel="Situação 1" itemValue="1" />
-                                            <f:selectItem itemLabel="Situação 2" itemValue="2" />
+                                            <f:selectItem itemLabel="DEVOLVIDO" itemValue="1" />
+                                            <f:selectItem itemLabel="EM CARTEIRA" itemValue="2" />
+                                            <f:selectItem itemLabel="COMPENSADO" itemValue="3" />
+                                            <f:selectItem itemLabel="RENEGOCIADO" itemValue="4" />
                                         </h:selectOneMenu>
                                     </td>
 
@@ -70,7 +68,8 @@
                                 <tr>
                                     <td  class="label"><label>Valor:</label></td>
                                     <td >
-                                        <h:inputText readonly="false"  id="valor" value="#{ContasPagarReceberBo.selectContasPagarReceber.valor}" styleClass="textFieldPequeno" maxlength="20">
+                                        <h:inputText readonly="false" id="valor" value="#{ContasPagarReceberBo.selectContasPagarReceber.valor}" styleClass="textFieldPequeno" maxlength="20">
+                                            <f:convertNumber/>
                                         </h:inputText>
                                     </td>
                                     <td  class="label"><label>Número Boleto:</label></td>
@@ -205,6 +204,7 @@
                                     <td  class="label" align="right"><label>Valor pago:</label></td>
                                     <td >
                                         <h:inputText readonly="false" id="valorPago" value="#{ContasPagarReceberBo.selectContasPagarReceber.valorPago}" styleClass="textFieldPequeno" maxlength="20">
+                                        <f:convertNumber/>
                                         </h:inputText>
                                     </td>
                                 </tr>

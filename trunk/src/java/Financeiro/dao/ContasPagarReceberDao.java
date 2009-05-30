@@ -53,10 +53,9 @@ public class ContasPagarReceberDao extends GenericDao implements IContasPagarRec
       return getPureList(ContasPagarReceberTo.class, "from ContasPagarReceberTo contas where contas.numDocumento = ? order by contas.numDocumento", numDoc);
    }
 
-   public List<ContasPagarReceberTo> consultar_clie(Integer cliente) {
+   public List<ContasPagarReceberTo> consultar_clie(String cliente) {
       return getPureList(ContasPagarReceberTo.class, 
-              //"from ContasPagarReceberTo contas where contas.clienteFornec like ? order by contas.numDocumento", cliente);
-              "from ContasPagarReceberTo contas where contas.clienteFornec = ? order by contas.numDocumento", cliente);
+              "from ContasPagarReceberTo contas where contas.clienteFornec.nome like ? order by contas.numDocumento", cliente);
    }
 
    public List<ContasPagarReceberTo> consultar_datavenc(Date data) {
