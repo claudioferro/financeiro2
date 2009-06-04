@@ -1,4 +1,7 @@
 package Financeiro.bo;
+
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 /**  
  *  
  * @author Rodrigo Scorsatto  
@@ -8,7 +11,8 @@ public class ValidaCnpj {
     /** Creates a new instance of ValidaCnpj */  
     public ValidaCnpj() {   
     }   
-    public static  boolean validaCnpj( String str_cnpj ) {   
+    public static  boolean validaCnpj( String str_cnpj ) {
+        
         if (! str_cnpj.substring(0,1).equals("")){   
             try{   
                 str_cnpj=str_cnpj.replace('.',' ');   

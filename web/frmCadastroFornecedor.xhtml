@@ -48,7 +48,7 @@
                                 <td class="label" >Contato</td>
                                 <td><h:inputText value="#{FornecedorBo.selectFornecedor.contato}" styleClass="textFieldEscritas" id="contato" maxlength="50"  />  </td>
                                 <td class="label" >Data Cadastro</td>
-                                <td><h:inputText converterMessage="Data Invalida" value="#{FornecedorBo.selectFornecedor.dataCadastro}" id="dataCadastro" styleClass="textFieldPequeno"  onkeypress="return formataCampo(this,3,10)">
+                                <td><h:inputText readyonly="true" converterMessage="Data Invalida" value="#{FornecedorBo.selectFornecedor.dataCadastro}" id="dataCadastro" styleClass="textFieldPequeno"  onkeypress="return formataCampo(this,3,10)">
                                     <f:convertDateTime pattern="dd/MM/yyyy" type="date" /></h:inputText>
                                 </td>
 
@@ -125,15 +125,15 @@
                             </tr>
                             <tr>
                                 <td class="label" >Telefone 1</td>
-                                <td> <h:inputText  value="#{FornecedorBo.selectFornecedor.telefone}" styleClass="textFieldPequeno" id="telefone1" maxlength="50"/></td>
+                                <td> <h:inputText  value="#{FornecedorBo.selectFornecedor.telefone}" styleClass="textFieldPequeno" id="telefone1" onkeypress="return formataCampo(this,12,13)"/></td>
                                 <td class="label" >Telefone 2</td>
-                                <td> <h:inputText  value="#{FornecedorBo.selectFornecedor.telefoneAlternativo}" styleClass="textFieldPequeno" id="telefone2" maxlength="50"/></td>
+                                <td> <h:inputText  value="#{FornecedorBo.selectFornecedor.telefoneAlternativo}" styleClass="textFieldPequeno" id="telefone2" onkeypress="return formataCampo(this,12,13)"/></td>
                             </tr>
                             <tr>
                                 <td class="label" >Fax</td>
-                                <td> <h:inputText  value="#{FornecedorBo.selectFornecedor.fax}" styleClass="textFieldPequeno" id="fax" maxlength="50"/></td>
+                                <td> <h:inputText  value="#{FornecedorBo.selectFornecedor.fax}" styleClass="textFieldPequeno" id="fax" onkeypress="return formataCampo(this,12,13)"/></td>
                                 <td class="label" >Celular</td>
-                                <td> <h:inputText  value="#{FornecedorBo.selectFornecedor.celular}" styleClass="textFieldPequeno" id="celular" maxlength="50"/></td>
+                                <td> <h:inputText  value="#{FornecedorBo.selectFornecedor.celular}" styleClass="textFieldPequeno" id="celular" onkeypress="return formataCampo(this,12,13)"/></td>
                             </tr>
                             <tr>
                                 <td class="label" >Email</td>

@@ -6,6 +6,7 @@ import Financeiro.dao.FornecedorDao;
 import Financeiro.to.ClienteFornecTo;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Date;
 import javax.faces.model.SelectItem;
 
 
@@ -28,6 +29,18 @@ public class FornecedorBo {
     private String tipoConsulta = "nome";
     private String uf = "";
     private boolean disabled = true;
+    public boolean rederBotaoAlterar;
+
+    public FornecedorBo() {
+    }
+
+    public boolean isRederBotaoAlterar() {
+        return rederBotaoAlterar;
+    }
+
+    public void setRederBotaoAlterar(boolean rederBotaoAlterar) {
+        this.rederBotaoAlterar = rederBotaoAlterar;
+    }
 
     public boolean isDisabled() {
         return disabled;
@@ -35,9 +48,6 @@ public class FornecedorBo {
 
     public void setDisabled(boolean disabled) {
         this.disabled = disabled;
-    }
-
-    public FornecedorBo() {
     }
 
     public String limpar() {
@@ -54,6 +64,7 @@ public class FornecedorBo {
         selectFornecedor = new ClienteFornecTo();
         setStatus("s");
         setMensagem("");
+        setRederBotaoAlterar(true);
         return "gotoFornecedor";
     }
 
@@ -72,10 +83,6 @@ public class FornecedorBo {
                 }
                 //Validação efetuada por Tiago Portella
                 if(selectFornecedor.getCategoria().equals("F")){
-                    if(selectFornecedor.getCpfCnpj().length() != 11){
-                        setMensagem("CPF inválido!");
-                        return "gotoFornecedor";
-                    }
                     if(ValidaCpf.validacpf(selectFornecedor.getCpfCnpj()) == false){
                         setMensagem("CPF inválido!");
                         return "gotoFornecedor";
@@ -83,10 +90,6 @@ public class FornecedorBo {
                 }
                 //Validação efetuada por Tiago Portella
                 if(selectFornecedor.getCategoria().equals("J")){
-                    if(selectFornecedor.getCpfCnpj().length() != 14){
-                        setMensagem("CNPJ inválido!");
-                        return "gotoFornecedor";
-                    }
                     if(ValidaCnpj.validaCnpj(selectFornecedor.getCpfCnpj()) == false){
                         setMensagem("CNPJ inválido!");
                         return "gotoFornecedor";
@@ -104,10 +107,14 @@ public class FornecedorBo {
                     return "gotoFornecedor";
                 }
                 //Validação efetuada por Tiago Portella
-                if(ValidaData.Nascimento(selectFornecedor.getDataCadastro()) == false){
+                Date dtHoje = new Date();
+                selectFornecedor.setDataCadastro(dtHoje);
+
+
+                /*if(ValidaData.Nascimento(selectFornecedor.getDataCadastro()) == false){
                     setMensagem("Data do cadastro é inválida");
                     return "gotoFornecedor";
-                }
+                }*/
 
                 //Validação efetuada por Tiago Portella
                 if(!selectFornecedor.getEmail().equals("")){
@@ -129,6 +136,7 @@ public class FornecedorBo {
                     return "gotoFornecedor";
                 }
 
+                selectFornecedor.setTipoCadastro("F");
                 fornecDao.salvar(getSelectFornecedor());
                 setStatus("s");
                 limpar();
@@ -146,10 +154,6 @@ public class FornecedorBo {
                 }
                 //Validação efetuada por Tiago Portella
                 if(selectFornecedor.getCategoria().equals("F")){
-                    if(selectFornecedor.getCpfCnpj().length() != 11){
-                        setMensagem("CPF inválido!");
-                        return "gotoFornecedor";
-                    }
                     if(ValidaCpf.validacpf(selectFornecedor.getCpfCnpj()) == false){
                         setMensagem("CPF inválido!");
                         return "gotoFornecedor";
@@ -157,10 +161,6 @@ public class FornecedorBo {
                 }
                 //Validação efetuada por Tiago Portella
                 if(selectFornecedor.getCategoria().equals("J")){
-                    if(selectFornecedor.getCpfCnpj().length() != 14){
-                        setMensagem("CNPJ inválido!");
-                        return "gotoFornecedor";
-                    }
                     if(ValidaCnpj.validaCnpj(selectFornecedor.getCpfCnpj()) == false){
                         setMensagem("CNPJ inválido!");
                         return "gotoFornecedor";

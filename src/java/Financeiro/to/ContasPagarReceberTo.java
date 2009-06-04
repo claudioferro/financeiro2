@@ -232,7 +232,7 @@ public class ContasPagarReceberTo implements java.io.Serializable{
     }
 
     public void setHistorico(String historico) {
-        this.historico = historico;
+        this.historico = historico.toUpperCase();
     }
 
     public String getNumeroBoleto() {

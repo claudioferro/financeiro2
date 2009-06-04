@@ -17,6 +17,7 @@ import Financeiro.dao.ContasPagarReceberDao;
 import Financeiro.dao.TipoDocumentoDao;
 import Financeiro.dao.MovimentacaoFinanceiraDao;
 import Financeiro.to.ContasPagarReceberTo;
+import Financeiro.to.EmpresaTo;
 import Financeiro.to.TipoDocumentoTo;
 //import Financeiro.to.MovimentacaoFinanceiraTo;
 
@@ -25,33 +26,28 @@ import java.util.List;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
-  
-
 
 /***********************************************************************
  * Module:  FornecedorBo.java
  * Author:  Carlos Wagner
  * Purpose: Defines the Class FornecedorBo
  ***********************************************************************/
-
 public class ContasPagarReceberBo {
 
     public boolean botaoSeleciona = false;
     public boolean rederConsultaData = false;
     public boolean rederConsulta = true;
+    
 
     private ContasPagarReceberDao contasDao = new ContasPagarReceberDao();
     private ContasPagarReceberTo selectContasPagarReceber;
-
     private EmpresaDao empresaDao = new EmpresaDao();
     private TipoDocumentoDao tipoDocumentoDao = new TipoDocumentoDao();
     private MovimentacaoFinanceiraDao movimentacaoFinanceiraDao = new MovimentacaoFinanceiraDao();
     private BancosDao bancosDao = new BancosDao();
-
     private FormaPagamentoDao formaPagamentoDao = new FormaPagamentoDao();
     private CentroCustoDao centroCustoDao = new CentroCustoDao();
     private ContaCorrenteDao contaCorrenteDao = new ContaCorrenteDao();
-
     private List<ContasPagarReceberTo> contasPagarReceber = null;
     private List<SelectItem> empresa;
     private List<SelectItem> tipoDocumento;
@@ -60,20 +56,17 @@ public class ContasPagarReceberBo {
     private List<SelectItem> formaPagto;
     private List<SelectItem> CentroCusto;
     private List<SelectItem> contaCorrente;
-
     private ClienteBo clienteBo = new ClienteBo();
     private FornecedorBo fornecedorBo = new FornecedorBo();
-
     private String mensagem = "";
     private String status;
     private boolean alt_cod;
     private String valConsulta = "";
     private String tipoConsulta = "numDoc";
-
     private String tipo = "C";
     private boolean disabled = true;
-
     private String statusConta;
+    private boolean rederLiquidacao;
 
     public String getStatusConta() {
         return statusConta;
@@ -86,19 +79,26 @@ public class ContasPagarReceberBo {
     public ContasPagarReceberBo() {
         ClienteBo cliente = new ClienteBo();
         cliente.limparCons();
+        setRederLiquidacao(true);
     }
 
-    public String setarTipoConsulta(){
-        if (tipoConsulta.equals("data") ) {
+    public String setarTipoConsulta() {
+        if (tipoConsulta.equals("data")) {
             setRederConsultaData(true);
             setRederConsulta(false);
-        }
-        else
-        {
+        } else {
             setRederConsultaData(false);
             setRederConsulta(true);
         }
         return "";
+    }
+
+    public boolean isRederLiquidacao() {
+        return rederLiquidacao;
+    }
+
+    public void setRederLiquidacao(boolean rederLiquidacao) {
+        this.rederLiquidacao = rederLiquidacao;
     }
 
     public boolean isBotaoSeleciona() {
@@ -170,127 +170,136 @@ public class ContasPagarReceberBo {
     public String addContas() {
         contasPagarReceber = null;
         selectContasPagarReceber = new ContasPagarReceberTo();
+
+        fornecedorBo.setRederBotaoAlterar(false);
+
         setStatus("s");
         setMensagem("");
         return "gotoContasPagarReceber";
     }
 
     public String salvar() {
-        try{
-            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-            String object = (String) session.getAttribute("codEmpresa");
-            int codEmpresa = Integer.parseInt(object);
+        //try{
+        HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        String object = (String) session.getAttribute("codEmpresa");
+        int codEmpresa = 0;
+        try {
+             codEmpresa = Integer.parseInt(object);
+        } catch (Exception e) {
+        }
 
-            // Se valor pago for igual ao valor da conta, então status ficará como Liquidado,
-            // caso contrário fica com status Aberto.
-            if (selectContasPagarReceber.getValor() == selectContasPagarReceber.getValorPago()){
-                selectContasPagarReceber.setStatus("L");
-                setStatusConta("LIQUIDADO");
-            }else {
-                selectContasPagarReceber.setStatus("A");
-                setStatusConta("ABERTO");
-            }
-
-
-            if (getStatus().equals("s")) {
-
-                if(selectContasPagarReceber.getTipoConta().equals("")){
-                    setMensagem("Campo Tipo de Conta obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getStatus().equals("Selecione")){
-                    setMensagem("Campo Status obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getNumDocumento().equals("")){
-                    setMensagem("Campo Número Documento obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getTipoDocumento().getCodTipoDocumento() == 0){
-                    setMensagem("Campo Tipo documento obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getSituacaoDocumento().equals("")){
-                    setMensagem("Campo Situação documento obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if (selectContasPagarReceber.getValor() <= 0) {
-                    setMensagem("Campo Valor obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getCentroCusto().getCodCentroCusto() == 0){
-                    setMensagem("Campo Centro de Custo obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(ValidaData.Nascimento(selectContasPagarReceber.getDataEmissao()) == false){
-                    setMensagem("Data de Emissão inválida!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getClienteFornec().getCodCliente() == 0){
-                    setMensagem("Campo Cliente/Fornecedor obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getNumNotaFiscal().equals("")){
-                    setMensagem("Campo N.F. obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-
-                selectContasPagarReceber.getEmpresa().setCodEmpresa(codEmpresa);
-                contasDao.salvar(getSelectContasPagarReceber());
-                setStatus("a");
-                setMensagem("Registro incluido com sucesso!");
-            } else {
-                if(selectContasPagarReceber.getTipoConta().equals("")){
-                    setMensagem("Campo Tipo de Conta obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getStatus().equals("Selecione")){
-                    setMensagem("Campo Status obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getNumDocumento().equals("")){
-                    setMensagem("Campo Número Documento obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getTipoDocumento().getCodTipoDocumento() == 0){
-                    setMensagem("Campo Tipo documento obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getSituacaoDocumento().equals("")){
-                    setMensagem("Campo Situação documento obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if (selectContasPagarReceber.getValor() <= 0) {
-                    setMensagem("Campo Valor obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getCentroCusto().getCodCentroCusto() == 0){
-                    setMensagem("Campo Centro de Custo obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(ValidaData.Nascimento(selectContasPagarReceber.getDataEmissao()) == false){
-                    setMensagem("Data de Emissão inválida!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getClienteFornec().getCodCliente() == 0){
-                    setMensagem("Campo Cliente/Fornecedor obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                if(selectContasPagarReceber.getNumNotaFiscal().equals("")){
-                    setMensagem("Campo N.F. obrigatorio!");
-                    return "gotoContasPagarReceber";
-                }
-                contasDao.alterar(getSelectContasPagarReceber());
-                setStatus("a");
-                setMensagem("Registro alterado com sucesso!");
-            }
-
-            contasPagarReceber = null;
-            return "gotoContasPagarReceber";
-        }catch(Exception e){
-            setMensagem("Ocorreu um erro interno no Servidor!");
+        if (selectContasPagarReceber.getValorPago() > 0 && selectContasPagarReceber.getDataLiquidacao() == null) {
+            setMensagem("Data de Liquidação obrigatória!");
             return "gotoContasPagarReceber";
         }
+
+        // Se valor pago for igual ao valor da conta, então status ficará como Liquidado,
+        // caso contrário fica com status Aberto.
+        if (selectContasPagarReceber.getValor() == selectContasPagarReceber.getValorPago()) {
+            selectContasPagarReceber.setStatus("L");
+            setStatusConta("LIQUIDADO");
+        } else {
+            selectContasPagarReceber.setStatus("A");
+            setStatusConta("ABERTO");
+        }
+
+        if (getStatus().equals("s")) {
+
+            if (selectContasPagarReceber.getTipoConta().equals("")) {
+                setMensagem("Campo Tipo de Conta obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getStatus().equals("Selecione")) {
+                setMensagem("Campo Status obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getNumDocumento().equals("")) {
+                setMensagem("Campo Número Documento obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getTipoDocumento().getCodTipoDocumento() == 0) {
+                setMensagem("Campo Tipo documento obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getSituacaoDocumento().equals("")) {
+                setMensagem("Campo Situação documento obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getValor() <= 0) {
+                setMensagem("Campo Valor obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getCentroCusto().getCodCentroCusto() == 0) {
+                setMensagem("Campo Centro de Custo obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (ValidaData.Nascimento(selectContasPagarReceber.getDataEmissao()) == false) {
+                setMensagem("Data de Emissão inválida!");
+                return "gotoContasPagarReceber";
+            }
+
+            if (selectContasPagarReceber.getClienteFornec() == null) {
+                setMensagem("Campo Cliente/Fornecedor obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+
+            
+            selectContasPagarReceber.getEmpresa().setCodEmpresa(codEmpresa);
+            contasDao.salvar(getSelectContasPagarReceber());
+            limpar();
+            setStatus("a");
+            setMensagem("Registro incluido com sucesso!");
+        } else {
+            if (selectContasPagarReceber.getTipoConta().equals("")) {
+                setMensagem("Campo Tipo de Conta obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getStatus().equals("Selecione")) {
+                setMensagem("Campo Status obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getNumDocumento().equals("")) {
+                setMensagem("Campo Número Documento obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getTipoDocumento().getCodTipoDocumento() == 0) {
+                setMensagem("Campo Tipo documento obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getSituacaoDocumento().equals("")) {
+                setMensagem("Campo Situação documento obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getValor() <= 0) {
+                setMensagem("Campo Valor obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getCentroCusto().getCodCentroCusto() == 0) {
+                setMensagem("Campo Centro de Custo obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+            if (ValidaData.Nascimento(selectContasPagarReceber.getDataEmissao()) == false) {
+                setMensagem("Data de Emissão inválida!");
+                return "gotoContasPagarReceber";
+            }
+            if (selectContasPagarReceber.getClienteFornec().getCodCliente() == 0) {
+                setMensagem("Campo Cliente/Fornecedor obrigatorio!");
+                return "gotoContasPagarReceber";
+            }
+
+            selectContasPagarReceber.getEmpresa().setCodEmpresa(codEmpresa);
+            contasDao.alterar(getSelectContasPagarReceber());
+            limpar();
+            setStatus("a");
+            setMensagem("Registro alterado com sucesso!");
+        }
+
+        contasPagarReceber = null;
+        return "gotoContasPagarReceber";
+    /*}catch(Exception e){
+    setMensagem("Ocorreu um erro interno no Servidor!");
+    return "gotoContasPagarReceber";
+    }*/
     }
 
     public String alterar() {
@@ -302,7 +311,7 @@ public class ContasPagarReceberBo {
 
     public String excluir() {
         //Validação efetuado por Tiago Portella
-        if(selectContasPagarReceber.getNumDocumento().equals("")){
+        if (selectContasPagarReceber.getNumDocumento().equals("")) {
             setMensagem("Informe um registro para a exclusão!");
             return "gotoContasPagarReceber";
         }
@@ -335,11 +344,12 @@ public class ContasPagarReceberBo {
     }
 
     public String iniciaEditContas() {
-
+        setRederLiquidacao(true);
         if (selectContasPagarReceber.getStatus().equals("L")) {
             setStatusConta("LIQUDADO");
-        }else
+        } else {
             setStatusConta("ABERTO");
+        }
 
         setStatus("a");
         setMensagem("");
@@ -347,20 +357,19 @@ public class ContasPagarReceberBo {
         return "gotoContasPagarReceber";
     }
 
-    
     public String consult_ContasPagarReceber() {
         contasPagarReceber = null;
         selectContasPagarReceber = new ContasPagarReceberTo();
         if (valConsulta.equals("")) {
             contasPagarReceber = contasDao.consultar();
-        }else if (tipoConsulta.equals("numDoc") && !valConsulta.equals("")) {
+        } else if (tipoConsulta.equals("numDoc") && !valConsulta.equals("")) {
             contasPagarReceber = contasDao.consultar_p(valConsulta);
         } else if (tipoConsulta.equals("cod") && !valConsulta.equals("")) {
             contasPagarReceber = contasDao.consultar_cod(Integer.parseInt(valConsulta));
         } else if (tipoConsulta.equals("valor") && !valConsulta.equals("")) {
             contasPagarReceber = contasDao.consultar_valor(Float.parseFloat(valConsulta));
-        }else if (tipoConsulta.equals("clie") && !valConsulta.equals("")) {
-            contasPagarReceber = contasDao.consultar_clie(valConsulta.toUpperCase()+"%");
+        } else if (tipoConsulta.equals("clie") && !valConsulta.equals("")) {
+            contasPagarReceber = contasDao.consultar_clie(valConsulta.toUpperCase() + "%");
         }
 
 
@@ -425,13 +434,14 @@ public class ContasPagarReceberBo {
 
     public String consultarClienteFornecedor() {
         setBotaoSeleciona(true);
-        ClienteBo cliente = new ClienteBo();
-        cliente.setRenderedAlterar(false);
-        
+
         if (getTipo().equals("C")) {
+            ClienteBo cliente = new ClienteBo();
+            cliente.setRenderedAlterar(false);
             clienteBo.consultar();
             return "cons_cliente";
         } else {
+            fornecedorBo.setRederBotaoAlterar(false);
             fornecedorBo.consultar();
             return "cons_fornecedor";
         }
