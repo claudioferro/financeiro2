@@ -89,11 +89,14 @@
                             <f:facet name="header">
                                 <h:outputText value="Ações"/>
                             </f:facet>
-                            <h:commandButton rendered="true" value= "Alterar" accesskey="A" styleClass="button" action="#{ClienteBo.iniciaEditCliente}" >
+                            <h:commandButton rendered="#{ClienteBo.renderedAlterar}" value= "Alterar" accesskey="A" styleClass="button" action="#{ClienteBo.iniciaEditCliente}" >
                                 <f:setPropertyActionListener target="#{ClienteBo.selectCliente}" value="#{item}"/>
                             </h:commandButton>
                             <h:commandButton rendered="#{MovimentacaoFinanceiraBo.renderedSeleciona}" value= "Seleciona" accesskey="S" styleClass="button"  action="#{MovimentacaoFinanceiraBo.selecionaClienteFornecedor}" >
                                 <f:setPropertyActionListener target="#{MovimentacaoFinanceiraBo.selectMovFinanceira.clienteFornecedor}" value="#{item}"/>
+                            </h:commandButton>
+                            <h:commandButton rendered="#{ContasPagarReceberBo.botaoSeleciona}" value= "Seleciona" accesskey="S" styleClass="button"  action="#{ContasPagarReceberBo.selecionaClienteFornecedor}" >
+                                <f:setPropertyActionListener target="#{ContasPagarReceberBo.selectContasPagarReceber.clienteFornec}" value="#{item}"/>
                             </h:commandButton>
 
                         </rich:column>
@@ -101,12 +104,8 @@
                             <rich:datascroller id="ds"></rich:datascroller>
                         </f:facet>
                     </rich:dataTable>
-
-
-
                 </h:form>
             </ui:define>
         </ui:composition>
-
     </body>
 </html>

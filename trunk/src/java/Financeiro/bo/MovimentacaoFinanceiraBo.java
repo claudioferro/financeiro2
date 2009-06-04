@@ -76,7 +76,7 @@ public class MovimentacaoFinanceiraBo {
     }
 
     public String salvar() {
-        try {
+       // try {
             HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
             String object = (String) session.getAttribute("codEmpresa");
             int codEmpresa = Integer.parseInt(object);
@@ -104,6 +104,10 @@ public class MovimentacaoFinanceiraBo {
                 }
                 if (selectMovFinanceira.getCentroCusto().getCodCentroCusto() == 0) {
                     setMensagem("Campo Centro de Custo obrigatorio!");
+                    return "gotoCadMovFinanceira";
+                }
+                if (selectMovFinanceira.getClienteFornecedor() == null) {
+                    setMensagem("Campo Cliente / Fornecedor obrigatorio!");
                     return "gotoCadMovFinanceira";
                 }
                 selectMovFinanceira.getEmpresa().setCodEmpresa(codEmpresa);
@@ -136,6 +140,10 @@ public class MovimentacaoFinanceiraBo {
                     setMensagem("Campo Centro de Custo obrigatorio!");
                     return "gotoCadMovFinanceira";
                 }
+                if (selectMovFinanceira.getClienteFornecedor() == null) {
+                    setMensagem("Campo Cliente / Fornecedor obrigatorio!");
+                    return "gotoCadMovFinanceira";
+                }
                 movFinanceiraDao.alterar(getSelectMovFinanceira());
                 setStatus("a");
                 limpar();
@@ -144,10 +152,10 @@ public class MovimentacaoFinanceiraBo {
             //Limpar cache
             movFinanceiras = null;
             return "gotoCadMovFinanceira";
-        } catch (Exception e) {
-            setMensagem("Ocorreu um erro interno no Servidor!");
-            return "gotoFornecedor";
-        }
+        //} catch (Exception e) {
+         //   setMensagem("Ocorreu um erro interno no Servidor!");
+         //   return "gotoCadMovFinanceira";
+       // }
     }
 
     public String alterar() {

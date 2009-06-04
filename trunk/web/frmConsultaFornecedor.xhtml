@@ -89,11 +89,17 @@
                             <f:facet name="header">
                                 <h:outputText value="Ações"/>
                             </f:facet>
-                            <h:commandButton value= "Alterar" accesskey="A" styleClass="button" action="#{FornecedorBo.iniciaEditFornecedor}" >
+
+                            <h:commandButton rendered="#{FornecedorBo.rederBotaoAlterar}" value= "Alterar" accesskey="A" styleClass="button" action="#{FornecedorBo.iniciaEditFornecedor}" >
                                 <f:setPropertyActionListener target="#{FornecedorBo.selectFornecedor}" value="#{item}"/>
                             </h:commandButton>
-                            <h:commandButton rendered="#{MovimentacaoFinanceiraBo.renderedSeleciona}" value= "Seleciona" accesskey="S" styleClass="button"  action="#{MovimentacaoFinanceiraBo.selecionaClienteFornecedor}" >
+
+                            <h:commandButton rendered="#{MovimentacaoFinanceiraBo.botaoSeleciona}" value= "Seleciona" accesskey="S" styleClass="button"  action="#{MovimentacaoFinanceiraBo.selecionaClienteFornecedor}" >
                                 <f:setPropertyActionListener target="#{MovimentacaoFinanceiraBo.selectMovFinanceira.clienteFornecedor}" value="#{item}"/>
+                            </h:commandButton>
+                            
+                            <h:commandButton rendered="#{ContasPagarReceberBo.botaoSeleciona}" value= "Seleciona" accesskey="S" styleClass="button"  action="#{ContasPagarReceberBo.selecionaClienteFornecedor}" >
+                                <f:setPropertyActionListener target="#{ContasPagarReceberBo.selectContasPagarReceber.clienteFornec}" value="#{item}"/>
                             </h:commandButton>
 
                         </rich:column>

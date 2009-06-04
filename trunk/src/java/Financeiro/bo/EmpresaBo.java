@@ -57,10 +57,6 @@ public class EmpresaBo {
      public String salvar() {
         try{
             if (getStatus().equals("s")) {
-                if(selectFilial.getCnpj().length() != 14){
-                    setMensagem("Cnpj inválido!");
-                    return "gotoCadempresa";
-                }
                 if(ValidaCnpj.validaCnpj(selectFilial.getCnpj()) == false){
                     setMensagem("Cnpj inválido!");
                     return "gotoCadempresa";
@@ -99,10 +95,6 @@ public class EmpresaBo {
                 setStatus("a");
                 setMensagem("Registro incluido com sucesso!");
             } else {
-                if(selectFilial.getCnpj().length() != 14){
-                    setMensagem("Cnpj inválido!");
-                    return "gotoCadempresa";
-                }
                 if(ValidaCnpj.validaCnpj(selectFilial.getCnpj()) == false){
                     setMensagem("Cnpj inválido!");
                     return "gotoCadempresa";

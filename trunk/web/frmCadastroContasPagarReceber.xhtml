@@ -18,18 +18,20 @@
                         <fieldset class="camposCompleto"><legend >CONTAS PAGAR/RECEBER - DADOS DOCUMENTO</legend>
                             <table align="center" border="0" cellspacing="5">
                                 <tr>
-                                    <td class="label"><label>Tipo de Conta:</label></td>
+                                    <td  class="label"><label>Codigo:</label></td>
+                                    <td >
+                                        <h:inputText readonly="true"  id="codcontas" value="#{ContasPagarReceberBo.selectContasPagarReceber.codContas}" styleClass="textFieldPequeno" maxlength="20">
+                                        </h:inputText>
+                                    </td>
+
+                                    <td><label>Tipo de Conta:</label></td>
                                     <td>
                                         <h:selectOneRadio id="tipoconta" value="#{ContasPagarReceberBo.selectContasPagarReceber.tipoConta}">
                                             <f:selectItem itemLabel="Pagar" itemValue="P" />
                                             <f:selectItem itemLabel="Receber" itemValue="R" />
                                         </h:selectOneRadio>
                                     </td>
-                                    <td  class="label"><label>Codigo da Conta:</label></td>
-                                    <td >
-                                        <h:inputText readonly="true"  id="codcontas" value="#{ContasPagarReceberBo.selectContasPagarReceber.codContas}" styleClass="textFieldPequeno" maxlength="20">
-                                        </h:inputText>
-                                    </td>
+
                                 </tr>
                                 <tr>
                                     <td class="label" align="right">Status:</td>
@@ -81,9 +83,9 @@
                                 <tr>
                                     <td class="label" >Centro de Custo:</td>
                                     <td align="left" >
-                                        <h:selectOneMenu converterMessage="Centro de Custo invalido" name="CentroCusto" id="CentroCusto" class="comboBoxGrande" value="#{ContasPagarReceberBo.selectContasPagarReceber.centroCusto}">                                           
-                                           <f:converter converterId="CentroCustoConverter"/>
-                                           <f:selectItems value="#{ContasPagarReceberBo.centroCustoSystem}" />
+                                        <h:selectOneMenu converterMessage="Centro de Custo invalido" name="CentroCusto" id="CentroCusto" class="comboBoxGrande" value="#{ContasPagarReceberBo.selectContasPagarReceber.centroCusto}">
+                                            <f:converter converterId="CentroCustoConverter"/>
+                                            <f:selectItems value="#{ContasPagarReceberBo.centroCustoSystem}" />
                                         </h:selectOneMenu>
                                     </td>
 
@@ -96,11 +98,11 @@
                                 <tr>
                                     <td class="label" >Data Emissão</td>
                                     <td><h:inputText converterMessage="Data Invalida" value="#{ContasPagarReceberBo.selectContasPagarReceber.dataEmissao}" id="dataEmissao" styleClass="textFieldPequeno"  onkeypress="return formataCampo(this,3,10)">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" type="date" /></h:inputText>
+                                        <f:convertDateTime pattern="dd/MM/yyyy" locale="pt,BR" timeZone="America/Sao_Paulo" /></h:inputText>
                                     </td>
                                     <td class="label" >Data Vencimento</td>
                                     <td><h:inputText converterMessage="Data Invalida" value="#{ContasPagarReceberBo.selectContasPagarReceber.dataVencimento}" id="dataVencimento" styleClass="textFieldPequeno"  onkeypress="return formataCampo(this,3,10)">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" type="date" /></h:inputText>
+                                        <f:convertDateTime pattern="dd/MM/yyyy" locale="pt,BR" timeZone="America/Sao_Paulo" /></h:inputText>
                                     </td>
                                 </tr>
                             </table>
@@ -146,7 +148,7 @@
                                             <f:selectItems value="#{ContasPagarReceberBo.bancosSystem}"/>
                                         </h:selectOneMenu>
                                     </td>
-                                    
+
                                     <td class="label" align="left"><label>Agência:</label></td>
                                     <td align="left" width="200">
                                         <h:inputText readonly="false" id="agencia" value="#{ContasPagarReceberBo.selectContasPagarReceber.agencia}" styleClass="textFieldPequeno" maxlength="20">
@@ -194,7 +196,7 @@
                                 <tr>
                                     <td class="label" align="left">Forma Pagamento:</td>
                                     <td>
-                                        <h:selectOneMenu defaultLabel="Selecione" converterMessage="Forma de Pagamento inválido" name="formaPagto" id="formaPagto" class="comboBoxGrande" value="#{ContasPagarReceberBo.selectContasPagarReceber.formaPagto}" >
+                                        <h:selectOneMenu  defaultLabel="" converterMessage="Forma de Pagamento inválido" name="formaPagto" id="formaPagto" class="comboBoxGrande" value="#{ContasPagarReceberBo.selectContasPagarReceber.formaPagto}" >
                                             <f:converter converterId="FormaPagamentoConverter"/>
                                             <f:selectItems value="#{ContasPagarReceberBo.formaPagtoSystem}"/>
                                         </h:selectOneMenu>
@@ -203,15 +205,15 @@
 
                                     <td  class="label" align="right"><label>Valor pago:</label></td>
                                     <td >
-                                        <h:inputText readonly="false" id="valorPago" value="#{ContasPagarReceberBo.selectContasPagarReceber.valorPago}" styleClass="textFieldPequeno" maxlength="20">
-                                        <f:convertNumber/>
+                                        <h:inputText id="valorPago" value="#{ContasPagarReceberBo.selectContasPagarReceber.valorPago}" styleClass="textFieldPequeno" maxlength="20">
+                                            <f:convertNumber/>
                                         </h:inputText>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="label" >Data Liq.</td>
                                     <td><h:inputText converterMessage="Data Invalida" value="#{ContasPagarReceberBo.selectContasPagarReceber.dataLiquidacao}" id="dataLiquidacao" styleClass="textFieldPequeno"  onkeypress="return formataCampo(this,3,10)">
-                                        <f:convertDateTime pattern="dd/MM/yyyy" type="date" /></h:inputText>
+                                        <f:convertDateTime pattern="dd/MM/yyyy" locale="pt,BR" timeZone="America/Sao_Paulo" /></h:inputText>
                                     </td>
                                 </tr>
                                 <tr>

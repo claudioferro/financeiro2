@@ -25,8 +25,6 @@ public class ContasPagarReceberDao extends GenericDao implements IContasPagarRec
       this.session = getSession();
    }
 
-
-
    public void limpar(){
 
    }

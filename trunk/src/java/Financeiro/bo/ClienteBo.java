@@ -9,6 +9,7 @@ import Financeiro.to.TipoClienteTo;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Date;
 import javax.faces.model.SelectItem;
 
 /**
@@ -37,9 +38,7 @@ public class ClienteBo {
 
     public void setRenderedAlterar(boolean renderedAlterar) {
         this.renderedAlterar = renderedAlterar;
-    }
-
-    
+    }    
 
     public boolean isDisabled() {
         return disabled;
@@ -66,6 +65,7 @@ public class ClienteBo {
         selectCliente = new ClienteFornecTo();
         setStatus("s");
         setMensagem("");
+        setRenderedAlterar(true);
         return "gotoCadcliente";
     }
 
@@ -84,10 +84,6 @@ public class ClienteBo {
                 }
                 //Validação efetuada por Tiago Portella
                 if(selectCliente.getCategoria().equals("F")){
-                    if(selectCliente.getCpfCnpj().length() != 11){
-                        setMensagem("CPF inválido!");
-                        return "gotoCadcliente";
-                    }
                     if(ValidaCpf.validacpf(selectCliente.getCpfCnpj()) == false){
                         setMensagem("CPF inválido!");
                         return "gotoCadcliente";
@@ -95,10 +91,6 @@ public class ClienteBo {
                 }
                 //Validação efetuada por Tiago Portella
                 if(selectCliente.getCategoria().equals("J")){
-                    if(selectCliente.getCpfCnpj().length() != 14){
-                        setMensagem("CNPJ inválido!");
-                        return "gotoCadcliente";
-                    }
                     if(ValidaCnpj.validaCnpj(selectCliente.getCpfCnpj()) == false){
                         setMensagem("CNPJ inválido!");
                         return "gotoCadcliente";
@@ -116,11 +108,15 @@ public class ClienteBo {
                     return "gotoCadcliente";
                 }
                 //Validação efetuada por Tiago Portella
-                if(ValidaData.Nascimento(selectCliente.getDataNascimento()) == false){
-                    setMensagem("Data de nascimneto é inválida");
-                    return "gotoCadcliente";
-                }
+                //if(ValidaData.Nascimento(selectCliente.getDataNascimento()) == false){
+                //    setMensagem("Data de nascimneto é inválida");
+                //    return "gotoCadcliente";
+                //}
                 //Validação efetuada por Tiago Portella
+
+                Date dtHoje = new Date();
+                selectCliente.setDataCadastro(dtHoje);
+
                 if(selectCliente.getTipoCliente() == null){
                     setMensagem("Campo Tipo de Cliente obrigatório");
                     return "gotoCadcliente";
@@ -162,10 +158,6 @@ public class ClienteBo {
                 }
                 //Validação efetuada por Tiago Portella
                 if(selectCliente.getCategoria().equals("F")){
-                    if(selectCliente.getCpfCnpj().length() != 11){
-                        setMensagem("CPF inválido!");
-                        return "gotoCadcliente";
-                    }
                     if(ValidaCpf.validacpf(selectCliente.getCpfCnpj()) == false){
                         setMensagem("CPF inválido!");
                         return "gotoCadcliente";
@@ -173,10 +165,6 @@ public class ClienteBo {
                 }
                 //Validação efetuada por Tiago Portella
                 if(selectCliente.getCategoria().equals("J")){
-                    if(selectCliente.getCpfCnpj().length() != 14){
-                        setMensagem("CNPJ inválido!");
-                        return "gotoCadcliente";
-                    }
                     if(ValidaCnpj.validaCnpj(selectCliente.getCpfCnpj()) == false){
                         setMensagem("CNPJ inválido!");
                         return "gotoCadcliente";
