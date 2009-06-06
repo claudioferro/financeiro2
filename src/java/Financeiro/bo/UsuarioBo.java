@@ -6,6 +6,7 @@ import Financeiro.to.FilialTo;
 import Financeiro.to.UsuarioTo;
 import java.util.LinkedList;
 import java.util.List;
+import javax.faces.component.html.HtmlSelectOneMenu;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
@@ -22,19 +23,20 @@ public class UsuarioBo {
     private String senha;
     private FilialDao filialDao = new FilialDao();
     private String codEmpresa;
- 
-
-
+    private String nomeEmpresa;
+    private HtmlSelectOneMenu selectEmpresa;
+    
     public UsuarioBo() {
     }
 
     public String doLogin() {
         boolean validated = usuarioDao.isValidLoginAndPassword(user, senha);
         if (validated) {
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userlogged",validated );
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario",getUser());
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("codEmpresa",getCodEmpresa());
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("empresa",getCodEmpresa());
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userlogged", validated);
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", getUser());
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("codEmpresa", getCodEmpresa());
+            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("empresa", selectEmpresa.getLang());
+            nomeEmpresa = selectEmpresa.getLang();
             setMensagem("Usuário ok");
             return "gotoMain";
         } else {
@@ -45,10 +47,22 @@ public class UsuarioBo {
         }
     }
 
+    public String doLogoff() {
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userlogged", false);
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", "");
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("codEmpresa", "");
+        setUser("");
+        setSenha("");
+        setMensagem("");
+        setCodEmpresa("");
+        return "gotoLogin";
+    }
+
     public String limparLogin() {
         setUser("");
         setSenha("");
         setMensagem("");
+        setCodEmpresa("");
         return "reload";
     }
 
@@ -76,41 +90,41 @@ public class UsuarioBo {
     }
 
     public String salvar() {
-        try{
+        try {
             if (getStatus().equals("s")) {
                 if (selectusuario.getNome().equals("")) {
                     setMensagem("Campo Nome obrigatório!");
                     return "gotoCadUsuario";
                 }
-                if(selectusuario.getCpf().equals("")){
+                if (selectusuario.getCpf().equals("")) {
                     setMensagem("Campo CPF obrigatório!");
                     return "gotoCadUsuario";
                 }
-                if(selectusuario.getCpf().length() != 11){
+                if (selectusuario.getCpf().length() != 11) {
                     setMensagem("CPF inválido!");
                     return "gotoCadUsuario";
                 }
-                if(ValidaCpf.validacpf(selectusuario.getCpf()) == false){
+                if (ValidaCpf.validacpf(selectusuario.getCpf()) == false) {
                     setMensagem("CPF inválido!");
                     return "gotoCadUsuario";
                 }
-                if(usuarioDao.consultar_CPF(selectusuario.getCpf()).size() > 0){
+                if (usuarioDao.consultar_CPF(selectusuario.getCpf()).size() > 0) {
                     setMensagem("Usuário já cadastrado!");
                     return "gotoCadUsuario";
                 }
-                if(selectusuario.getLogin().equals("")){
+                if (selectusuario.getLogin().equals("")) {
                     setMensagem("Campo Login obrigatório!");
                     return "gotoCadUsuario";
                 }
-                if(usuarioDao.consultar_Login(selectusuario.getLogin()).size() > 0){
+                if (usuarioDao.consultar_Login(selectusuario.getLogin()).size() > 0) {
                     setMensagem("Login indisponível!");
                     return "gotoCadUsuario";
                 }
-                if(selectusuario.getSenha().equals("")){
+                if (selectusuario.getSenha().equals("")) {
                     setMensagem("Campo Senha obrigatório!");
                     return "gotoCadUsuario";
                 }
-                if(selectusuario.getDepartamento().equals("")){
+                if (selectusuario.getDepartamento().equals("")) {
                     setMensagem("Campo Departamento obrigatório!");
                     return "gotoCadUsuario";
                 }
@@ -122,27 +136,27 @@ public class UsuarioBo {
                     setMensagem("Campo Nome obrigatório!");
                     return "gotoCadUsuario";
                 }
-                if(selectusuario.getCpf().equals("")){
+                if (selectusuario.getCpf().equals("")) {
                     setMensagem("Campo CPF obrigatório!");
                     return "gotoCadUsuario";
                 }
-                if(selectusuario.getCpf().length() != 11){
+                if (selectusuario.getCpf().length() != 11) {
                     setMensagem("CPF inválido!");
                     return "gotoCadUsuario";
                 }
-                if(ValidaCpf.validacpf(selectusuario.getCpf()) == false){
+                if (ValidaCpf.validacpf(selectusuario.getCpf()) == false) {
                     setMensagem("CPF inválido!");
                     return "gotoCadUsuario";
                 }
-                if(selectusuario.getLogin().equals("")){
+                if (selectusuario.getLogin().equals("")) {
                     setMensagem("Campo Login obrigatório!");
                     return "gotoCadUsuario";
                 }
-                if(selectusuario.getSenha().equals("")){
+                if (selectusuario.getSenha().equals("")) {
                     setMensagem("Campo Senha obrigatório!");
                     return "gotoCadUsuario";
                 }
-                if(selectusuario.getDepartamento().equals("")){
+                if (selectusuario.getDepartamento().equals("")) {
                     setMensagem("Campo Departamento obrigatório!");
                     return "gotoCadUsuario";
                 }
@@ -153,7 +167,7 @@ public class UsuarioBo {
             //Limpar cache
             usuarios = null;
             return "gotoCadUsuario";
-        }catch(Exception e){
+        } catch (Exception e) {
             setMensagem("Ocorreu um erro interno no Servidor!");
             return "gotoCadUsuario";
         }
@@ -218,6 +232,7 @@ public class UsuarioBo {
         setMensagem("");
         return "gotoCadUsuario";
     }
+
     public List<SelectItem> getFiliaisSystem() {
         List<SelectItem> toReturn = new LinkedList<SelectItem>();
 
@@ -290,7 +305,7 @@ public class UsuarioBo {
 
     public void setSenha(String senha) {
         this.senha = UsuarioTo.encripta(senha);
-        // this.senha = senha;
+    // this.senha = senha;
     }
 
     public String getUser() {
@@ -309,5 +324,20 @@ public class UsuarioBo {
         this.codEmpresa = codEmpresa;
     }
 
+    public HtmlSelectOneMenu getSelectEmpresa() {
+        return selectEmpresa;
+    }
 
+    public void setSelectEmpresa(HtmlSelectOneMenu selectEmpresa) {
+        this.selectEmpresa = selectEmpresa;
+    }
+
+    public String getNomeEmpresa() {
+        return nomeEmpresa;
+    }
+
+    public void setNomeEmpresa(String nomeEmpresa) {
+        this.nomeEmpresa = nomeEmpresa;
+    }
+    
 }
