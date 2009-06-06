@@ -34,18 +34,18 @@ public class MovimentacaoFinanceiraDao extends GenericDao implements IMovimentac
         return null;
     }
 
-    public List<MovimentacaoFinanceiraTo> consultar() {
-        return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov order by mov.codMovimentacaoFinanceira");
+    public List<MovimentacaoFinanceiraTo> consultar(Integer codempresa) {
+        return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov where mov.empresa.codEmpresa = ? order by mov.codMovimentacaoFinanceira",codempresa);
     }
 
-    public List<MovimentacaoFinanceiraTo> consultar_cod(Integer codigo) {
-        return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov where mov.codMovimentacaoFinanceira = ? ", codigo);
+    public List<MovimentacaoFinanceiraTo> consultar_cod(Integer codigo,Integer codempresa) {
+        return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov where mov.codMovimentacaoFinanceira = ? and mov.empresa.codEmpresa = ?  ", codigo,codempresa);
     }
-    public List<MovimentacaoFinanceiraTo> consultar_valor(Double valor) {
-        return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov where mov.valorLancamento = ? ", valor);
+    public List<MovimentacaoFinanceiraTo> consultar_valor(Double valor,Integer codempresa) {
+        return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov where mov.valorLancamento = ? and mov.empresa.codEmpresa = ?", valor,codempresa);
     }
-     public List<MovimentacaoFinanceiraTo> consultar_nome(String nome) {
-        return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov where mov.clienteFornecedor.nome like ? ", nome);
+     public List<MovimentacaoFinanceiraTo> consultar_nome(String nome,Integer codempresa) {
+        return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov where mov.clienteFornecedor.nome like ? and mov.empresa.codEmpresa = ?", nome,codempresa);
     }
     public void alterar(MovimentacaoFinanceiraTo movimentacaoFinanceira)
     {

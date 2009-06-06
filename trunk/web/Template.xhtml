@@ -60,12 +60,12 @@
                                         <rich:panelMenuItem label="Conta Corrente"  action="#{ContaCorrenteBo.addContaCorrente}">
                                             <f:param name="contacorrente" value="Conta Corrente"/>
                                         </rich:panelMenuItem>
-                                        
+
 
                                         <rich:panelMenuItem label="Tipo Documento" action="#{TipoDocumentoBo.addTipoDocumento}">
                                             <f:param name="tipodocumento" value="Tipo Documento"/>
                                         </rich:panelMenuItem>
-                                         <rich:panelMenuItem label="Usuário" action="#{UsuarioBo.addUsuario}">
+                                        <rich:panelMenuItem label="Usuário" action="#{UsuarioBo.addUsuario}">
                                             <f:param name="usuario" value="Usuário"/>
                                         </rich:panelMenuItem>
 
@@ -92,7 +92,7 @@
                                         <rich:panelMenuItem label="Contas a Pagar/Receber">
                                             <f:param name="conspagar_receber" value="Contas a Pagar/Receber"/>
                                         </rich:panelMenuItem>
-                                      </rich:panelMenuGroup>
+                                    </rich:panelMenuGroup>
 
                                     <rich:panelMenuGroup label="Relatórios">
                                         <rich:panelMenuItem label="Lista de Cidades"  action="gotoCidadeList">
@@ -101,7 +101,7 @@
                                         <rich:panelMenuItem label="Contas Pagar Receber"  action="gotoRelContasPagarReceber">
                                             <f:param name="listContasPagarReceber" value="Lista de ContasPagarReceber"/>
                                         </rich:panelMenuItem>
-                                         <rich:panelMenuItem label="Movimentação Periodo"  action="gotoRelMovimentacaoPeriodo">
+                                        <rich:panelMenuItem label="Movimentação Periodo"  action="gotoRelMovimentacaoPeriodo">
                                             <f:param name="listMovimentacaoPeriodo" value="Lista de MovimentacaoPeriodo"/>
                                         </rich:panelMenuItem>
 
@@ -115,10 +115,14 @@
 
                                         </rich:panelMenuItem>
                                     </rich:panelMenuGroup>
+                                    <rich:panelMenuGroup label="Sair">
+                                        <rich:panelMenuItem label="Sair do Sistema" action="#{UsuarioBo.doLogoff}" >
+                                            <f:param name="logoff" value="Clientes"/>
+                                        </rich:panelMenuItem>
+                                    </rich:panelMenuGroup>
                                 </rich:panelMenu>
-
-
                             </h:panelGrid>
+                            
 
                         </h:form>
                     </ui:insert>

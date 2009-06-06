@@ -37,6 +37,9 @@ public class MovimentacaoFinanceiraBo {
     private boolean disabled = true;
     private boolean renderedSeleciona = false;
     public boolean botaoSeleciona = false;
+    HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+    String object = (String) session.getAttribute("codEmpresa");
+    int codEmpresa = Integer.parseInt(object);
 
     public boolean isRenderedSeleciona() {
         return renderedSeleciona;
@@ -77,9 +80,6 @@ public class MovimentacaoFinanceiraBo {
 
     public String salvar() {
        // try {
-            HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
-            String object = (String) session.getAttribute("codEmpresa");
-            int codEmpresa = Integer.parseInt(object);
 
             if (getStatus().equals("s")) {
                 if (selectMovFinanceira.getOperacao().equals("")) {
@@ -227,13 +227,13 @@ public class MovimentacaoFinanceiraBo {
         selectMovFinanceira = new MovimentacaoFinanceiraTo();
 
         if (valConsulta.equals("")) {
-            movFinanceiras = movFinanceiraDao.consultar();
+            movFinanceiras = movFinanceiraDao.consultar(codEmpresa);
         } else if (tipoConsulta.equals("valor") && !valConsulta.equals("")) {
-            movFinanceiras = movFinanceiraDao.consultar_valor(Double.parseDouble(valConsulta));
+            movFinanceiras = movFinanceiraDao.consultar_valor(Double.parseDouble(valConsulta),codEmpresa);
         } else if (tipoConsulta.equals("cod") && !valConsulta.equals("")) {
-            movFinanceiras = movFinanceiraDao.consultar_cod(Integer.parseInt(valConsulta));
+            movFinanceiras = movFinanceiraDao.consultar_cod(Integer.parseInt(valConsulta),codEmpresa);
         } else if (tipoConsulta.equals("clie") && !valConsulta.equals("")) {
-            movFinanceiras = movFinanceiraDao.consultar_nome(valConsulta.toUpperCase()+ "%");
+            movFinanceiras = movFinanceiraDao.consultar_nome(valConsulta.toUpperCase()+ "%",codEmpresa);
 
         }
         return "cons_cons_mov";
@@ -292,7 +292,7 @@ public class MovimentacaoFinanceiraBo {
 
     public List<MovimentacaoFinanceiraTo> getMovFinanceiras() {
         if (movFinanceiras == null) {
-            movFinanceiras = movFinanceiraDao.consultar();
+            movFinanceiras = movFinanceiraDao.consultar(codEmpresa);
         }
         return movFinanceiras;
     }

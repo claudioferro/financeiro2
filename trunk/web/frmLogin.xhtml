@@ -45,9 +45,9 @@
                                     <td align="right">Empresa:</td>
                                     <td>
                                         <br/>
-                                        <h:selectOneMenu defaultLabel="Selecione" converterMessage="Empresa invalido" class="comboBoxGrande"  name="Empresa" id="empresa" value="#{UsuarioBo.codEmpresa}" >
+                                        <h:selectOneMenu  binding="#{UsuarioBo.selectEmpresa}" defaultLabel="Selecione" converterMessage="Empresa invalido" class="comboBoxGrande"  name="Empresa" id="empresa" value="#{UsuarioBo.codEmpresa}" >
                                             <f:converter converterId="FilialConverter"/>
-                                            <f:selectItems value="#{UsuarioBo.filiaisSystem}" />
+                                            <f:selectItems  value="#{UsuarioBo.filiaisSystem}" />
                                         </h:selectOneMenu>
                                     </td>
                                 </tr>
