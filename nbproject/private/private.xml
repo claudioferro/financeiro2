@@ -1,15 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/1"/>
-    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/1">
-        <file>file:/C:/Facul/Projeto%20de%20Software%20II/Financeiro2.2/nbproject/build-impl.xml</file>
-        <file>file:/C:/Facul/Projeto%20de%20Software%20II/Financeiro2.2/src/java/Financeiro/bo/AuthFilter.java</file>
-        <file>file:/C:/Facul/Projeto%20de%20Software%20II/Financeiro2.2/src/java/Financeiro/bo/ContasPagarReceberBo.java</file>
-        <file>file:/C:/Facul/Projeto%20de%20Software%20II/Financeiro2.2/src/java/Financeiro/bo/FormaPagamentoBo.java</file>
-        <file>file:/C:/Facul/Projeto%20de%20Software%20II/Financeiro2.2/src/java/Financeiro/bo/MovimentacaoFinanceiraBo.java</file>
-        <file>file:/C:/Facul/Projeto%20de%20Software%20II/Financeiro2.2/src/java/Financeiro/bo/TipoDocumentoBo.java</file>
-        <file>file:/C:/Facul/Projeto%20de%20Software%20II/Financeiro2.2/src/java/Financeiro/bo/TipoDocumentoConverter.java</file>
-        <file>file:/C:/Facul/Projeto%20de%20Software%20II/Financeiro2.2/src/java/Financeiro/dao/ContasPagarReceberDao.java</file>
-        <file>file:/C:/Facul/Projeto%20de%20Software%20II/Financeiro2.2/web/WEB-INF/web.xml</file>
-    </open-files>
 </project-private>
