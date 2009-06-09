@@ -2,6 +2,7 @@ package Financeiro.dao;
 
 import Financeiro.Ice.IMovimentacaoFinanceira;
 import Financeiro.to.MovimentacaoFinanceiraTo;
+import java.util.Date;
 import java.util.List;
 import org.hibernate.Session;
 
@@ -33,7 +34,10 @@ public class MovimentacaoFinanceiraDao extends GenericDao implements IMovimentac
     public MovimentacaoFinanceiraTo consultar(String movimentacaoFinanceira) {
         return null;
     }
-
+    public List<MovimentacaoFinanceiraTo> consultarRelatorioAtivo(int codEmpresa,Integer contaCorrente,Date dataInicial,Date dataFinal) {
+       return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov where mov.empresa.codEmpresa = ? and mov.contaCorrente.codContaCorrente = ? and mov.dataLancamento >= ? and mov.dataLancamento <=? ",codEmpresa,contaCorrente,dataInicial,dataFinal);
+       
+   }
     public List<MovimentacaoFinanceiraTo> consultar(Integer codempresa) {
         return getPureList(MovimentacaoFinanceiraTo.class, "from MovimentacaoFinanceiraTo mov where mov.empresa.codEmpresa = ? order by mov.codMovimentacaoFinanceira",codempresa);
     }
