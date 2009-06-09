@@ -8,8 +8,10 @@ public class ValidaCpf {
     /** Creates a new instance of ValidaCpf */  
     public ValidaCpf() {   
     }   
-    public static boolean validacpf(String strCpf){ // formato XXX.XXX.XXX-XX   
-        if (! strCpf.substring(0,1).equals("")){   
+    public static boolean validacpf(String strCpf){ // formato XXX.XXX.XXX-XX
+        if(strCpf.equals("")){
+            return false;
+        }else if (! strCpf.substring(0,1).equals("")){
             try{
                 strCpf=strCpf.replace('.',' ');
                 strCpf=strCpf.replace('/',' ');

@@ -12,8 +12,9 @@ public class ValidaCnpj {
     public ValidaCnpj() {   
     }   
     public static  boolean validaCnpj( String str_cnpj ) {
-        
-        if (! str_cnpj.substring(0,1).equals("")){   
+        if(str_cnpj.equals("")){
+            return false;
+        }else if (! str_cnpj.substring(0,1).equals("")){
             try{   
                 str_cnpj=str_cnpj.replace('.',' ');   
                 str_cnpj=str_cnpj.replace('/',' ');   
