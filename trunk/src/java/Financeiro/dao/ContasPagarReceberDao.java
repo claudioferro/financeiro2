@@ -42,7 +42,15 @@ public class ContasPagarReceberDao extends GenericDao implements IContasPagarRec
       ContasPagarReceberTo contas = getPojo(ContasPagarReceberTo.class, codContas);
       return contas;
    }
-
+public List<ContasPagarReceberTo> consultarRelatorioAtivo(String status, Date dataInicial, Date dataFinal, int codEmpresa) {
+       return getPureList(ContasPagarReceberTo.class, "from ContasPagarReceberTo contas where contas.status = ? and contas.dataVencimento >= ? and contas.dataVencimento <= ? and contas.empresa.codEmpresa = ? ", status,dataInicial, dataFinal, codEmpresa);
+   }
+   public List<ContasPagarReceberTo> consultarRelatorioLiquidado(String status, Date dataInicial, Date dataFinal, int codEmpresa) {
+       return getPureList(ContasPagarReceberTo.class, "from ContasPagarReceberTo contas where contas.status = ? and contas.dataLiquidacao >= ? and contas.dataLiquidacao <= ? and contas.empresa.codEmpresa = ?", status,dataInicial, dataFinal,codEmpresa);
+   }
+   public List<ContasPagarReceberTo> consultarRelatorioTodos(Date dataInicial, Date dataFinal, int codEmpresa) {
+       return getPureList(ContasPagarReceberTo.class, "from ContasPagarReceberTo contas where contas.dataEmissao >= ? and contas.dataEmissao <= ? and contas.empresa.codEmpresa = ?" ,dataInicial, dataFinal,codEmpresa);
+   }
    public List<ContasPagarReceberTo> consultar() {
       return getPureList(ContasPagarReceberTo.class, "from ContasPagarReceberTo contas order by contas.numDocumento");
    }

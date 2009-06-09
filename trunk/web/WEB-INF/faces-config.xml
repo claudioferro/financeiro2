@@ -43,9 +43,13 @@
             <from-outcome>cons_usuario</from-outcome>
             <to-view-id>/frmConsultaUsuario.xhtml</to-view-id>
         </navigation-case>
-        <navigation-case>
+       <navigation-case>
             <from-outcome>gotoRelContasPagarReceber</from-outcome>
             <to-view-id>/frmRelatorioContasPagarReceber.xhtml</to-view-id>
+        </navigation-case>
+         <navigation-case>
+            <from-outcome>gotoRelMovimentacaoFinanceira</from-outcome>
+            <to-view-id>/frmRelatorioMovimentacaoFinanceira.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
     <navigation-rule>
@@ -314,5 +318,10 @@
         <converter-id>FormaPagamentoConverter</converter-id>
         <converter-class>Financeiro.bo.FormaPagamentoConverter</converter-class>
     </converter>
+        <managed-bean>
+        <managed-bean-name>RelatoriosBo</managed-bean-name>
+        <managed-bean-class>Financeiro.bo.RelatoriosBo</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
 </faces-config>
 

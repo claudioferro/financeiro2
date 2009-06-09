@@ -2,9 +2,9 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
-        <Node id="frmConsultaEmpresa.xhtml" x="1400" y="300" zoom="true"/>
         <Node id="frmCadastroTipoCliente.xhtml" x="150" y="300" zoom="true"/>
         <Node id="frmConsultaCentroCusto.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="frmConsultaEmpresa.xhtml" x="1400" y="300" zoom="true"/>
         <Node id="frmCadastroTipoDocumento.xhtml" x="900" y="600" zoom="true"/>
         <Node id="frmConsultaTipoCliente.xhtml" x="400" y="150" zoom="true"/>
         <Node id="frmConsultaContasPagarReceber.xhtml" x="650" y="900" zoom="true"/>
@@ -12,19 +12,21 @@
         <Node id="frmRelContasReceberPagarDocumentosLiquidadosDataPagamento.xhtml" x="900" y="750" zoom="true"/>
         <Node id="frmConsultaTipoDocumento.xhtml" x="650" y="750" zoom="true"/>
         <Node id="frmCadastroContaCorrente.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="frmRelatorioMovimentacaoFinanceira.xhtml" x="1900" y="300" zoom="true"/>
         <Node id="frmConsultaFornecedor.xhtml" x="1150" y="300" zoom="true"/>
         <Node id="frmCadastroEmpresa.xhtml" x="1650" y="150" zoom="true"/>
         <Node id="frmConsultaCliente.xhtml" x="1400" y="150" zoom="true"/>
-        <Node id="frmConsultaMovFinanceira.xhtml" x="1900" y="150" zoom="true"/>
+        <Node id="frmLogin.xhtml" x="2150" y="150" zoom="true"/>
         <Node id="frmCadastroCentroCusto.xhtml" x="650" y="450" zoom="true"/>
-        <Node id="frmCadastroBancos.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="frmConsultaMovFinanceira.xhtml" x="1900" y="150" zoom="true"/>
         <Node id="frmCadastroContasPagarReceber.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="frmCadastroBancos.xhtml" x="150" y="600" zoom="true"/>
         <Node id="frmConsultaFormaPagto.xhtml" x="900" y="300" zoom="true"/>
         <Node id="tipoDocumentoList.xhtml" x="400" y="1050" zoom="true"/>
         <Node id="frmConsultaUsuario.xhtml" x="1150" y="600" zoom="true"/>
         <Node id="frmCadastroUsuario.xhtml" x="400" y="900" zoom="true"/>
-        <Node id="contasPagarReceberList.xhtml" x="150" y="1050" zoom="true"/>
         <Node id="home.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="contasPagarReceberList.xhtml" x="150" y="1050" zoom="true"/>
         <Node id="frmCadastroFormaPagamento.xhtml" x="150" y="150" zoom="true"/>
         <Node id="formaPagtoList.xhtml" x="400" y="600" zoom="true"/>
         <Node id="frmCadastroCidades.xhtml" x="150" y="450" zoom="true"/>
@@ -32,8 +34,8 @@
         <Node id="forward.jsp" x="400" y="450" zoom="true"/>
         <Node id="frmCadastroClientes.xhtml" x="650" y="300" zoom="true"/>
         <Node id="frmMovFinanceira.xhtml" x="150" y="1200" zoom="true"/>
-        <Node id="frmCadastroFornecedor.xhtml" x="1150" y="150" zoom="true"/>
         <Node id="frmConsultaBanco.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="frmCadastroFornecedor.xhtml" x="1150" y="150" zoom="true"/>
         <Node id="frmConsultaContaCorrente.xhtml" x="400" y="750" zoom="true"/>
         <Node id="frmConsultaCidade.xhtml" x="400" y="300" zoom="true"/>
         <Node id="fornecedorList.xhtml" x="900" y="450" zoom="true"/>

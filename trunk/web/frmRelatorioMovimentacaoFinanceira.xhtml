@@ -11,27 +11,25 @@
     <body>
 
         <ui:composition template="./Template.xhtml">
-            <ui:param name="title" value="Relatório Contas Pagar Receber Vencimento"/>
+            <ui:param name="title" value="Relatório Movimentação Financeira"/>
             <ui:define name="content">
                 <h:form>
                     <fieldset class="camposCompleto">
-                        <legend class="news">Relatório Contas Pagar Receber Vencimento</legend>
+                        <legend class="news">Relatório Movimentação Financeira</legend>
                         <table  align="center" border="0">
                             <tr>
-                               <td class="label" align="right">Status:</td>
-                                    <td align="left" >
-                                        <h:selectOneMenu name="status" class="comboBox" value="#{RelatoriosBo.statusRelatorio}">
-                                            <f:selectItem itemLabel="Selecione" itemValue=""/>
-                                            <f:selectItem itemLabel="Aberto" itemValue="A" />
-                                            <f:selectItem itemLabel="Liquidado" itemValue="L" />
-                                            <f:selectItem itemLabel="Todos" itemValue="T" />
+                              <td class="label">Conta Corrente</td>
+                                    <td>
+                                        <h:selectOneMenu defaultLabel="Selecione" converterMessage="Conta Corrente Invalida" name="contaCorrente" id="contaCorrente" class="comboBoxGrande" value="#{MovimentacaoFinanceiraBo.selectMovFinanceira.contaCorrente}" >
+                                            <f:converter converterId="ContaCorrenteConverter"/>
+                                            <f:selectItems value="#{MovimentacaoFinanceiraBo.contaCorrenteSystem}" />
                                         </h:selectOneMenu>
                                     </td>
                             </tr>
                             <tr>
                                 <td class="label" >Periodo:</td>
                                 <td>
-                                    
+
                                     <h:inputText converterMessage="Data Invalida" value="#{RelatoriosBo.dataInicial}" id="peridoInicial" styleClass="textFieldPequeno"  onkeypress="return formataCampo(this,3,10)" >
 
                                     <f:convertDateTime pattern="dd/MM/yyyy" locale="pt,BR" timeZone="America/Sao_Paulo" /></h:inputText>&#160;&#160; a&#160;&#160;
