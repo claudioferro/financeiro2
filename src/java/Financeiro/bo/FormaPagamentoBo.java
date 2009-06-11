@@ -56,7 +56,7 @@ public class FormaPagamentoBo
                 setMensagem("Campo Descrição obrigatorio!");
                 return "gotoFormaPagto";
              }
-             if(formapgDao.consultar(selectFormaPagamento.getDescricao()) != null){
+           if(formapgDao.consultarDesc(selectFormaPagamento.getDescricao()).size() > 0){
                 setMensagem("Já existe um registro com esta descrição!");
                 return "gotoFormaPagto";
              }

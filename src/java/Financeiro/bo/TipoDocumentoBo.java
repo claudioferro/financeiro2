@@ -58,10 +58,11 @@ public class TipoDocumentoBo {
                 setMensagem("Campo Descrição obrigatorio!");
                 return "gotoTipoDocumento";
              }
-             if(tipoDocumentoDao.consultar(selectTipoDocumento.getDescricao()) != null){
+             if(tipoDocumentoDao.consultarDesc(selectTipoDocumento.getDescricao()).size() > 0){
                 setMensagem("Já existe um registro com essa descrição!");
                 return "gotoTipoDocumento";
              }
+
              tipoDocumentoDao.salvar(getSelectTipoDocumento());
              setStatus("a");
              limpar();
@@ -83,7 +84,7 @@ public class TipoDocumentoBo {
           }
 
           //Limpar cache
-          tipoDocumentoDao = null;
+          tipoDocumento = null;
           return "gotoTipoDocumento";
         }catch(Exception e){
             setMensagem("Ocorreu um erro interno no Servidor!");
