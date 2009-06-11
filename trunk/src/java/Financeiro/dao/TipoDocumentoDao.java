@@ -44,6 +44,11 @@ public class TipoDocumentoDao extends GenericDao implements ITipoDocumento
         return tipoDoc;
     }
 
+    public List<TipoDocumentoTo> consultarDesc(String descricao) {
+        List<TipoDocumentoTo> tipoDoc = getPureList(TipoDocumentoTo.class, "from TipoDocumentoTo tipoDoc where tipoDoc.descricao = ?", descricao);
+        return tipoDoc;
+    }
+
     public List<TipoDocumentoTo> consultar() {
         return getPureList(TipoDocumentoTo.class, "from TipoDocumentoTo tipodoc order by tipodoc.descricao");
     }

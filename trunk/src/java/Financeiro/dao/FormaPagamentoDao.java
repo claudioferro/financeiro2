@@ -38,8 +38,13 @@ public class FormaPagamentoDao extends GenericDao implements IFormaPagamento
         return formaPagamento.getDescricao();
     }
 
-    public FormaPagamentoTo consultar(String descricao) {
-        FormaPagamentoTo formaPagamento = getPojo(FormaPagamentoTo.class, descricao);
+//    public FormaPagamentoTo consultar(String descricao) {
+//        FormaPagamentoTo formaPagamento = getPojo(FormaPagamentoTo.class, descricao);
+//        return formaPagamento;
+//    }
+
+    public List<FormaPagamentoTo> consultarDesc(String descricao) {
+        List<FormaPagamentoTo> formaPagamento = getPureList(FormaPagamentoTo.class, "from FormaPagamentoTo formapg where formapg.descricao = ?", descricao);
         return formaPagamento;
     }
 
@@ -49,6 +54,10 @@ public class FormaPagamentoDao extends GenericDao implements IFormaPagamento
 
     public List<FormaPagamentoTo> consultar_p(String desc_FormaPagto) {
         return getPureList(FormaPagamentoTo.class, "from FormaPagamentoTo formapg where formapg.descricao like ? order by formapg.codFormaPagamento", desc_FormaPagto);
+    }
+
+    public FormaPagamentoTo consultar(String formaPagamento) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
 }
