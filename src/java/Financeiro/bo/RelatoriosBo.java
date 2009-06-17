@@ -141,6 +141,10 @@ public class RelatoriosBo {
     }
 
 
+   public String limparCons() {
+      contaCorrente = null;
+      return "ok";
+   }
   
     
 }
