@@ -145,6 +145,7 @@ public class TipoDocumentoBo {
           //Limpar cache
           tipoDocumento = null;
           limpar();
+          setMensagem("Registro excluido com sucesso!");
           return "gotoTipoDocumento";
        }catch(Exception e){
             setMensagem("Ocorreu um erro interno no Servidor!");

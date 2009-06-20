@@ -12,6 +12,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import sun.misc.BASE64Encoder;
 
+
 @Entity
 @SequenceGenerator(name = "usuario_codusuario_seq", sequenceName = "usuario_codusuario_seq")
 @Table(name = "public.usuario")
