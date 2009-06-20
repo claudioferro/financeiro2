@@ -28,12 +28,14 @@ public class RelatoriosBo {
     HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
     String object = (String) session.getAttribute("codEmpresa");
     int codEmpresa = Integer.parseInt(object);
+    public String mensagem = "";
 
     public String imprimirMovimentacaoFinanceira() {
         MovimentacaoFinanceiraDao movimentacaoFinanceiraDao = new MovimentacaoFinanceiraDao();
         Integer codContaCorrente = contaCorrente.getCodContaCorrente();
+        //valida data
         List<MovimentacaoFinanceiraTo> movimentacaoFinanceiraTo = movimentacaoFinanceiraDao.consultarRelatorioAtivo(codEmpresa,codContaCorrente,dataInicial,dataFinal);
-        
+        //valida retorno
 
         try {
             FacesContext facesContext = FacesContext.getCurrentInstance();
@@ -62,9 +64,9 @@ public class RelatoriosBo {
 
     public String imprimir() {
         ContasPagarReceberDao contasPagarReceberDao = new ContasPagarReceberDao();
-
+        //valida data
         List<ContasPagarReceberTo> contasPagarReceberTo1 = null;
-
+        //valida retorno
         if (statusRelatorio.equals("A")) {
             contasPagarReceberTo1 = contasPagarReceberDao.consultarRelatorioAtivo(statusRelatorio, dataInicial, dataFinal, codEmpresa);
         } else {

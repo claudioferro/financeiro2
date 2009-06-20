@@ -25,11 +25,20 @@ public class UsuarioBo {
     private String codEmpresa;
     private String nomeEmpresa;
     private HtmlSelectOneMenu selectEmpresa;
-    
+
     public UsuarioBo() {
     }
 
     public String doLogin() {
+       
+        if (usuarioDao.consultar().size() <= 0) {
+            selectusuario = new UsuarioTo();
+            selectusuario.setNome("Usuário Padrão, altere sua senha");
+            selectusuario.setLogin("root");
+            selectusuario.setSenha("12345");
+            usuarioDao.salvar(getSelectusuario());
+        }
+
         boolean validated = usuarioDao.isValidLoginAndPassword(user, senha);
         if (validated) {
             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("userlogged", validated);
@@ -74,6 +83,7 @@ public class UsuarioBo {
         selectusuario.setLogin("");
         selectusuario.setNome("");
         selectusuario.setSenha("");
+        setDisabled(true);
 
         setStatus("s");
         usuarios = null;
@@ -230,6 +240,7 @@ public class UsuarioBo {
     public String iniciaEditUsuario() {
         setStatus("a");
         setMensagem("");
+        setDisabled(false);
         return "gotoCadUsuario";
     }
 
@@ -339,5 +350,4 @@ public class UsuarioBo {
     public void setNomeEmpresa(String nomeEmpresa) {
         this.nomeEmpresa = nomeEmpresa;
     }
-    
 }

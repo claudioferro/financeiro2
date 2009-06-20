@@ -165,7 +165,7 @@ public class CidadeBo {
             limpar();
             return "gotoListCid";
         }catch(Exception e){
-            setMensagem("Ocorreu um erro interno no Servidor!");
+            setMensagem("Ocorreu um erro interno no Servidor!"+" Mensagem para suporte:"+e);
             return "gotoListCid";
         }
     }

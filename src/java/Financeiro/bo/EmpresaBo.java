@@ -156,7 +156,7 @@ public class EmpresaBo {
             filiais = null;
             limpar();
         }catch(Exception e){
-            setMensagem("Ocorreu um erro interno no Servidor!");
+            setMensagem("Ocorreu um erro interno no Servidor!"+"Mensagem para Suporte:"+e);
         }
     }
 

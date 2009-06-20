@@ -17,7 +17,6 @@ import Financeiro.dao.ContasPagarReceberDao;
 import Financeiro.dao.TipoDocumentoDao;
 import Financeiro.dao.MovimentacaoFinanceiraDao;
 import Financeiro.to.ContasPagarReceberTo;
-import Financeiro.to.EmpresaTo;
 import Financeiro.to.TipoDocumentoTo;
 //import Financeiro.to.MovimentacaoFinanceiraTo;
 
@@ -318,10 +317,11 @@ public class ContasPagarReceberBo {
 
         contasDao.excluir(getSelectContasPagarReceber());
         setStatusConta("");
-        setMensagem("Registro excluido com sucesso!");
+        
         //Limpar cache
         contasPagarReceber = null;
         limpar();
+        setMensagem("Registro excluido com sucesso!");
         return "gotoContasPagarReceber";
     }
 

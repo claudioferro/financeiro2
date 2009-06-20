@@ -19,7 +19,9 @@
                             <table align="center" border="0" cellspacing="5">
                                 <tr>
                                     <td  class="label"><label>Codigo:</label></td>
-                                    <td >
+                                    <td ><h:inputHidden id="codEmpresa" value="#{ContasPagarReceberBo.selectContasPagarReceber.empresa}" >
+                                            <f:converter converterId="FilialConverter"/>
+                                        </h:inputHidden>
                                         <h:inputText readonly="true"  id="codcontas" value="#{ContasPagarReceberBo.selectContasPagarReceber.codContas}" styleClass="textFieldPequeno" maxlength="20">
                                         </h:inputText>
                                     </td>
