@@ -1,0 +1,1 @@
+Projeto de um sistema Financeiro web usando as tecnologias java com hibernate, jsf e Richfaces
